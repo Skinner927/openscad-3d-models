@@ -1,43 +1,26 @@
-// Total screw travel. Actual outer height will be larger because I dumb.
-total_height = 70; 
-// Want to be kinda thick so it doesn't move.
-depth = 5; 
+/* Begin suggested config */
+total_height = 70; // total screw travel. Outer actual will be a little bigger.
+depth = 5; // want to be kinda thick so it doesn't move
 
-// false = small segment on top; true = top segment stretched to fill.
+// If false, remainder is a small segment on top
+// If true, top segment is stretched to fill space.
 remainder_fill = true; 
 
-// distance between centers of screws for z-stop pcb.
 screw_distance = 11;
-// diameter of pcb screws.
 screw_hole_d = 4.2;
 
-// Length of the screw tracks for each segment.
 track_length = 18;
-// Vertical spacing between segments.
 track_spacing = 2;
-// 2020 frame is 20mm wide.
-frame_width = 19; 
+frame_width = 19; // 2020 frame is 20mm wide
 
-/*[offshoot 1]*/
-offshoot1=true;
-offshoot1_color="green";
-offshoot1_track=13;
-offshoot1_padding = 3;
-offshoot1_flare = 4;
-offshoot1_z_offset = 10;
-offshoot1_x_offset = 0;
-
-/*[offshoot 2]*/
-offshoot2=true;
-offshoot2_color="blue";
-offshoot2_track=8;
-offshoot2_padding = 3;
-offshoot2_flare = 4;
-offshoot2_z_offset = 40;
-offshoot2_x_offset = 5;
+offshoot=true;
+offshoot_track=11;
+offshoot_padding = 3;
+offshoot_z_offset = track_length/2 - track_spacing;
+offshoot_x_offset = 0;
 
 /* end config */
-module _end_config_() { echo(""); }
+
 
 $fa = 1;
 $fs = 0.4;
@@ -60,44 +43,28 @@ if (do_remainder_fill != remainder_fill) {
     echo("WARNING: Not enough space, forcing remainder_fill = true");
 }
 
-/* MODEL */
+/* BEGIN */
+
 
 union(){
-    all_panels();
     
-    if (offshoot1) {
-        color(offshoot1_color, 1.0)
-            offshoot(offshoot1_track, offshoot1_padding, offshoot1_flare, offshoot1_z_offset, offshoot1_x_offset);
-    }
-    if (offshoot2) {
-        color(offshoot2_color, 1.0)
-            offshoot(offshoot2_track, offshoot2_padding, offshoot2_flare, offshoot2_z_offset, offshoot2_x_offset);
-    }
-}
-
-
-/* MODULES */
-
-module offshoot(track, padding, flare, z_offset, x_offset) {
-    bounding_width = track + screw_hole_d + padding + x_offset;
-    bounding_height = screw_hole_d + padding;
     
-    trans_x = (bounding_width/2) + (frame_width/2);
-    translate([trans_x, 0, z_offset])
-    difference() {
-        hull() {
-            hull()
-                screw_holes(track, screw_hole_d + padding, depth, vertical=false, wall_multiplier=1);
-            
-            flare_fudge = 0.1;
-            translate([(bounding_width/-2) - 0.5 - flare_fudge, 0, 0])
-                cube([1, depth, bounding_height+flare], center=true);
+    
+        all_panels();
+    
+    if (offshoot) {
+        #translate([
+            ((frame_width/2)+((offshoot_track + offshoot_padding)/2)) + offshoot_x_offset,
+            0,
+            ((screw_hole_d + offshoot_padding)/2) + offshoot_z_offset
+        ]){
+            difference() {
+                cube([offshoot_track + offshoot_padding, depth, screw_hole_d + offshoot_padding], center=true);
+                hull()
+                    screw_holes(offshoot_track - screw_hole_d, screw_hole_d, depth, vertical=false);
+            }
         }
-        
-        hull()
-            screw_holes(track, screw_hole_d, depth, vertical=false);
     }
-    
     
 }
 
@@ -149,12 +116,67 @@ module panel(want_track_length = track_length) {
     }
 }
 
-module screw_holes(distance, diameter, wall, vertical=true, wall_multiplier=4) {
+module screw_holes(distance, diameter, wall, vertical=true) {
     //translate([0, 0, (switch_height/2) - (switch_screw_hole_d/2) - (wall/2)])
     rotate(vertical ? 90 : 0, [0, 1, 0])
     for (s = [-2:4:2]) {
         translate([distance/s, 0, 0])
         rotate([90, 0, 0])
-        cylinder(wall*wall_multiplier, d=diameter, center=true);
+        cylinder(wall*4, d=diameter, center=true);
     }
 }
+
+/*
+
+wall = 3;
+
+
+frame_screw_distance = 11;
+frame_screw_hole_d = 4.2;
+frame_width = max(17, frame_screw_hole_d + wall); // 2020 frame is 20mm wide
+frame_height = frame_screw_distance + frame_screw_hole_d + wall;
+
+switch_screw_distance = 11;
+switch_screw_hole_d = 4;
+switch_width = max(17, switch_screw_distance + switch_screw_hole_d + wall);
+switch_height = 67; // total outside, screw guides will be smaller
+switch_extra_width = wall*2; // for support
+switch_screw_offset_bottom = wall;
+
+switch_screw_guide_length = switch_height - wall - switch_screw_hole_d - switch_screw_offset_bottom;
+
+
+union() {
+    // frame
+    translate([switch_width/2 + frame_width/2, 0, 0])
+    difference() {
+        cube([frame_width, wall, frame_height], center=true);
+        
+        screw_holes(frame_screw_distance, frame_screw_hole_d, vertical=true);
+    }
+
+
+    // vert
+    translate([0, 0, switch_height/2 - frame_height/2])    
+    difference() {
+        cube([switch_width + switch_extra_width, wall, switch_height], center=true);
+        
+        for (v = [-1:2:1]) {
+            translate([(switch_screw_distance / 2) * v, 0, switch_screw_offset_bottom/2])
+            hull()
+            screw_holes(switch_screw_guide_length, switch_screw_hole_d, vertical=true);
+        }
+    }
+    
+}
+
+module screw_holes(distance, diameter, vertical=true) {
+    //translate([0, 0, (switch_height/2) - (switch_screw_hole_d/2) - (wall/2)])
+    rotate(vertical ? 90 : 0, [0, 1, 0])
+    for (s = [-2:4:2]) {
+        translate([distance/s, 0, 0])
+        rotate([90, 0, 0])
+        cylinder(wall*4, d=diameter, center=true);
+    }
+}
+*/

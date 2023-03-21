@@ -3,6 +3,7 @@ screw = 4.2;
 $fn= $preview ? 32 : 64;
 
 difference() {
+    // https://www.thingiverse.com/thing:3363632/files
     import("orig-pcb-case.stl");
     
     translate([-250, -250, 12])
