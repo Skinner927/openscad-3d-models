@@ -1,0 +1,6 @@
+G-code
+
+M302 S0; allow cold extrusion
+G91;  relative position
+
+G1 E100 F100
