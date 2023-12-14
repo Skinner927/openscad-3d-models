@@ -1,0 +1,50 @@
+---
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+Language: Cpp
+# Cpp is used as fallback for "unknown" languages like .scad
+BasedOnStyle: LLVM
+IndentWidth: 2
+ColumnLimit: 100
+ContinuationIndentWidth: 2
+SpacesBeforeTrailingComments: 2
+ReflowComments: true
+
+# If we pretend all OpenSCAD functions that operate on children() are
+# 'if' statements formatting is a little better.
+# Search docs for 'A vector of macros'
+# StatementAttributeLikeMacros might be useful later too
+#IfMacros:
+#StatementMacros:
+#NamespaceMacros:
+SpaceBeforeParens: Never
+IfMacros:
+  # Transformations
+  - translate
+  - rotate
+  - scale
+  - resize
+  - mirror
+  - multmatrix
+  - color
+  - offset
+  - hull
+  - minkowski
+  # Boolean
+  - union
+  - difference
+  - intersection
+ForEachMacros:
+  - let
+StatementAttributeLikeMacros:
+  - "!"
+  - "*"
+  - "#"
+  - "%"
+# Macros:
+#   - $fa=fa
+#   - $fs=fs
+#   - $fn=fn
+#   - $t=t
+#   - $vpr=vpr
+#   - $vpt=vpt
+...

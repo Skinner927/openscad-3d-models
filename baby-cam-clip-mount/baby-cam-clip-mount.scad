@@ -1,8 +1,8 @@
 
 
-pin_width = 11.5;
-pin_height = 10.5;
-pin_length = 30;
+pin_width = 11.5;  // shaft's x
+pin_depth = 11.5;  // shaft's y
+pin_height = 30;   // shaft's z
 pin_wall = 2;
 
 base = 70;
@@ -12,13 +12,17 @@ intersection(){
 
 difference() {
     union() {
+        // deck
         cube([base, base, base_wall], center=true);
         
-        translate([0, 0, -(pin_height + pin_wall + base_wall - 0.01)])
+        //-(pin_wall + base_wall - 0.01)
+        translate([0, 0, pin_height/-2])
         difference() {
-            cube([pin_width + pin_wall, pin_height + pin_wall, pin_length], center=true);
+            // shaft
+            cube([pin_width + pin_wall, pin_depth + pin_wall, pin_height], center=true);
+            // shaft extrusion (subtrusion?)
             translate([0, 0, -pin_wall])
-            cube([pin_width, pin_height, pin_length], center=true);
+            cube([pin_width, pin_depth, pin_height], center=true);
         }
     }
     translate([0, (base/2) - 4, 0])
