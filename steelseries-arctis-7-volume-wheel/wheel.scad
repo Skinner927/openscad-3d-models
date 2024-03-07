@@ -4,17 +4,17 @@ ff = 0.001; // global fudge
 // Diagram of pot mounting pin
 // https://www.aliexpress.us/item/3256803001774180.html
 // https://www.mouser.com/datasheet/2/15/RK08H-1371008.pdf
-pin_em = 0.05;  // fudge to embiggen the shaft for easier fitting
-pin_d = pin_em + 2.5;
-pin_cut_w = pin_em + 1.9;
-pin_screw_d = 1.4 + 0.05; // M1.4 screw
+pin_ff = 0.4;  // fudge to embiggen the shaft for easier fitting
+pin_d = pin_ff + 2.5;
+pin_cut_w = pin_ff + 1.9;
+pin_screw_d = 1.4 + 0.1; // M1.4 screw
 pin_h = 1;
 
 /* This is what the wheel essentially looks like (lol)
 
-         |~~~~~~~~~~~~~~~| <- l3_d  // layer3 diameter
-           |~~~~~~~~~~~| <--- l2_d  // layer2 diameter
-              |~~~~~| <------ l1_d  // layer1 diameter
+         |~~~~~~~~~~~~~~~| -- l3_d  // layer3 diameter
+           |~~~~~~~~~~~| ---- l2_d  // layer2 diameter
+              |~~~~~| ------- l1_d  // layer1 diameter
                  .---------- screw
                  v
               #######    <--- l1_h  // layer1 height
@@ -38,10 +38,10 @@ l3_offset // layer3 offset, from bottom of layer1 to top of layer
 */
 l3_d = 14.5;  // maybe 14.25?
 l2_d = 13;
-l1_d = 8.5;  // maybe 9?
+l1_d = 8;
 
 l1_h = 0.5;
-l2_h = 4;
+l2_h = 3.2;
 l3_h = 1;
 
 l3_offset = 1;
@@ -71,7 +71,7 @@ difference() {
     cylinder(h=l3_h, d=l3_d, center=true);
   }
 
-  // If I don't first union these the transparent rendering doesn't work
+  // If I don't first union these, the transparent rendering doesn't work
   // correctly.
   union() {
     // void
@@ -87,12 +87,9 @@ difference() {
 }
 
 
-
-
-
 module pin() {
   union() {
-    // Main shaft
+    // potentiometer shaft
     translate([0, 0, pin_h/-2])
     intersection() {
       cylinder(h=pin_h, d=pin_d, center=true);
