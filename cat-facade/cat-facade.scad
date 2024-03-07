@@ -35,7 +35,7 @@ if ($preview) {
 // base-layer.svg
 % color("lightgrey", 0.8) base_layer();
 // fence-layer.svg
-!color("green", 1.0) fence_layer();
+color("green", 1.0) fence_layer();
 if(1) {
   // cat-circle-with-engraving.svg
   color("blue", 0.6)
