@@ -1,9 +1,9 @@
-id = 25;
+id = 26;
 ir = id/2;
-id_cut = 19; // where to cut circle in half measuring from the top, NOT origin.
+id_cut = 22; // where to cut circle in half measuring from the top, NOT origin.
 y_cut = (id_cut - ir);
 height = 36;
-thic = 3;
+thic = 6;
 // Nice round end at end of clip
 ball_cyl_r = thic/4;
 // Increase r because we have to deal with thic
@@ -11,15 +11,14 @@ ball_r = ir + ball_cyl_r;
 // this should prob use radians but whatever, it works, it'll never change
 ball_y_slide = thic/8;
 
-
-arm_length = 19; // Starts from end of cut, will exist on the fliped side too
+arm_length = 19; // Starts from end of cut
 
 $fn = 90;
 
 union() {
   clip();
 
-  translate([(circle_x(r=ball_r, y=y_cut)*2) + ball_cyl_r, arm_length+ir, 0])
+  translate([(circle_x(r=ball_r, y=y_cut)*2) + ball_cyl_r, arm_length+ir+thic, 0])
     rotate([0, 0, 180])
     clip();
 }
