@@ -39,6 +39,7 @@ module shaft_usb_pin_tool(h=gear_thickness, center=false) {
   }
 }
 
+// TODO: rename stepper_sun_* to stepper_28byj48_*
 // stepper datasheet for dimensions
 // https://components101.com/sites/default/files/component_datasheet/28byj48-step-motor-datasheet.pdf
 stepper_sun_shaft_pin_x = 3;
@@ -60,9 +61,10 @@ gear_sun_thickness = gear_thickness + load_shaft_arm_gap_height;
 sun_table_thickness = max(stepper_sun_shaft_to_body,
   (stepper_knurled_insert_length + stepper_knurled_insert_wall));
 sun_table_leg_width = 8;
-sun_table_width = (stepper_sun_mount_distance +
-  (stepper_knurled_insert_od) + (stepper_knurled_insert_wall*2));
-sun_table_filet = 0.4;
+sun_Table_leg_height = stepper_sun_height + 3; // arbitrary +3
+sun_table_width = (stepper_sun_mount_distance + stepper_knurled_insert_od
+  + (stepper_knurled_insert_wall*2) + 2);
+sun_table_filet = 0.8;
 
 module stepper_sun_shaft_pin_tool(h=stepper_sun_shaft_pin_z, center=false) {
   tz = center ? 0 : h/2;
