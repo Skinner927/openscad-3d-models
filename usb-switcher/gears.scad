@@ -22,7 +22,7 @@ if ("usb" == model) {
 
   if (detailed_debug) {
     // just a placeholder bearing
-    bearing(pos=[0, 0, load_shaft_arm_gap_height], model=608);
+    bearing(pos=[0, 0, load_arm_gap_height], model=608);
   }
 } else {
   assert(false, "Invalid 'model' variable");

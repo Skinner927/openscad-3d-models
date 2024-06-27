@@ -2,11 +2,12 @@ $openscad = 'C:\Program Files\OpenSCAD\openscad.exe'
 
 # File = @("value of model", "value of model")
 $models = @{
-  "gears" = @("usb", "planet", "sun");
+  'gears' = @('usb', 'planet', 'sun');
+  'shafts' = @('sun_stepper2arm');
 }
 
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = 'Stop'
 
 # CD to where this script lives
 Set-Location $PSScriptRoot
