@@ -5,9 +5,6 @@ use <lib/BOSL/transforms.scad>
 use <lib/bearing.scad>
 include <variables.scad>
 
-// note for later about gear spacing:
-// :  two gears should have their centers separated by the sum of their pitch_radius.
-
 // All models are oriented that +Y is "North" towards the USB devices.
 // This is because the gears are oriented that way.
 
@@ -21,7 +18,7 @@ if ("usb" == model) {
 } else if ("planet" == model) {
   gear_planet();
 } else if ("sun" == model) {
-  gear_sun();
+  gear_sun(with_legs=true);
 
   if (detailed_debug) {
     // just a placeholder bearing
@@ -87,8 +84,67 @@ module gear_planet() {
   }
 }
 
+module gear_sun(with_legs = true) {
+  table_shift = ((sun_table_width - (gear_standard_outer_radius*2))/-2) + 0.1;
+
+  union() {
+    // Build table and gear
+    difference() {
+      union() {
+        // This gear is a little taller than normal so there's space between where
+        // the teeth mesh and the "table top". Originally I had a spacer, but
+        // making a longer gear means no need for supports.
+        gear_standard(with_bearing=false, h=gear_sun_thickness);
+
+        // Table top
+        translate([table_shift, 0, sun_table_thickness/-2])
+        cuboid([sun_table_width, sun_table_width,  sun_table_thickness],
+                fillet=sun_table_filet, align=V_CENTER, edges=EDGES_ALL);
+      }
+
+      // Recess for bearing in gear and all the way down through the table
+      bearing_hole_tool_h = gear_sun_thickness + sun_table_thickness;
+      translate([0, 0, (-bearing_hole_tool_h + gear_sun_thickness)-gear_bearing_floor_thickness])
+        cylinder(d=bearing608_outside_d + bearing_fudge, h=bearing_hole_tool_h);
+
+      // Bearing hole top of gear
+      translate([0, 0, gear_sun_thickness/2])
+        cylinder(d=bearing608_bore_flange_d+1, h=gear_sun_thickness);
+
+      // Servo mounts (threaded inserts)
+      translate([-stepper_shaft_center_offset, 0, -sun_table_thickness - 0.01])
+      for (i=[0,1]) {
+        insert_true_od = stepper_knurled_insert_od + (stepper_knurled_insert_wall*2);
+        insert_true_h = stepper_knurled_insert_length + stepper_knurled_insert_wall;
+
+        rotate([0, 0, i * 180])
+          translate([0, stepper_mount_distance/2, 0])
+          cylinder(d=stepper_knurled_insert_od, h=stepper_knurled_insert_length);
+      }
+    }
+
+    // Add legs to table
+    translate([table_shift, 0, sun_table_thickness/-2])
+    if (with_legs) {
+      leg_x = (sun_table_width - sun_table_leg_width) / 2;
+      leg_y = (sun_table_width - sun_table_leg_width) / 2;
+      leg_z = (sun_table_thickness / -2) + 0.01;
+
+      for (i = [0:3]) {
+        xm = i>1 ? 1 : -1;
+        ym = i%2 ? 1 : -1;
+        foot_rot = i>1 ? 0: 180;
+
+        translate([xm*leg_x, ym*leg_y, leg_z])
+          rotate([0, 0, foot_rot])
+          gear_sun_table_leg();
+      }
+    }
+  }
+}
+
 module gear_sun_table_leg(
-  width=sun_table_leg_width, height=sun_Table_leg_height,
+  width=sun_table_leg_width, height=sun_table_leg_height,
   fillet=sun_table_filet, screw_hole_d=3.3, screw_edge=2, screw_head_d=5.3,
   screw_head_tapered=true, screw_head_depth=1, screw_min_offset=4
 ) {
@@ -125,64 +181,5 @@ module gear_sun_table_leg(
             h=screw_head_depth + 0.01, center=false
           );
       }
-  }
-}
-
-module gear_sun(with_legs = true) {
-  table_shift = ((sun_table_width - (gear_standard_outer_radius*2))/-2) + 0.1;
-
-  union() {
-    // Build table and gear
-    difference() {
-      union() {
-        // This gear is a little taller than normal so there's space between where
-        // the teeth mesh and the "table top". Originally I had a spacer, but
-        // making a longer gear means no need for supports.
-        gear_standard(with_bearing=false, h=gear_sun_thickness);
-
-        // Table top
-        translate([table_shift, 0, sun_table_thickness/-2])
-        cuboid([sun_table_width, sun_table_width,  sun_table_thickness],
-                fillet=sun_table_filet, align=V_CENTER, edges=EDGES_ALL);
-      }
-
-      // Recess for bearing in gear and all the way down through the table
-      bearing_hole_tool_h = gear_sun_thickness + sun_table_thickness;
-      translate([0, 0, (-bearing_hole_tool_h + gear_sun_thickness)-gear_bearing_floor_thickness])
-        cylinder(d=bearing608_outside_d + bearing_fudge, h=bearing_hole_tool_h);
-
-      // Bearing hole top of gear
-      translate([0, 0, gear_sun_thickness/2])
-        cylinder(d=bearing608_bore_flange_d+1, h=gear_sun_thickness);
-
-      // Servo mounts (threaded inserts)
-      translate([-stepper_sun_shaft_offset_center, 0, -sun_table_thickness - 0.01])
-      for (i=[0,1]) {
-        insert_true_od = stepper_knurled_insert_od + (stepper_knurled_insert_wall*2);
-        insert_true_h = stepper_knurled_insert_length + stepper_knurled_insert_wall;
-
-        rotate([0, 0, i * 180])
-          translate([0, stepper_sun_mount_distance/2, 0])
-          cylinder(d=stepper_knurled_insert_od, h=stepper_knurled_insert_length);
-      }
-    }
-
-    // Add legs to table
-    translate([table_shift, 0, sun_table_thickness/-2])
-    if (with_legs) {
-      leg_x = (sun_table_width - sun_table_leg_width) / 2;
-      leg_y = (sun_table_width - sun_table_leg_width) / 2;
-      leg_z = (sun_table_thickness / -2) + 0.01;
-
-      for (i = [0:3]) {
-        xm = i>1 ? 1 : -1;
-        ym = i%2 ? 1 : -1;
-        foot_rot = i>1 ? 0: 180;
-
-        translate([xm*leg_x, ym*leg_y, leg_z])
-          rotate([0, 0, foot_rot])
-          gear_sun_table_leg();
-      }
-    }
   }
 }
