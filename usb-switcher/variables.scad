@@ -44,9 +44,25 @@ module shaft_usb_pin_tool(h=gear_thickness, center=false) {
 stepper_sun_shaft_pin_x = 3;
 stepper_sun_shaft_pin_y = 5;
 stepper_sun_shaft_pin_z = 6+2;
+stepper_sun_shaft_to_body = 10;  // from tip of shaft to mounting tangs
 stepper_sun_riser_z = 5; // how far off the plane to mount. Shaft has a collar.
 stepper_sun_mount_distance = 35;
+stepper_sun_shaft_offset_center = 8;
 stepper_sun_height = 20;
+
+// Using M4 x 5mm thread with a M4 x 4mm(l) x 6(od) knurled insert
+// for motor mount.
+stepper_knurled_insert_od = 6;
+stepper_knurled_insert_length = 6;  // actually 4 but screw is 5 and +1 for melted plastic
+stepper_knurled_insert_wall = 1;
+
+gear_sun_thickness = gear_thickness + load_shaft_arm_gap_height;
+sun_table_thickness = max(stepper_sun_shaft_to_body,
+  (stepper_knurled_insert_length + stepper_knurled_insert_wall));
+sun_table_leg_width = 8;
+sun_table_width = (stepper_sun_mount_distance +
+  (stepper_knurled_insert_od) + (stepper_knurled_insert_wall*2));
+sun_table_filet = 0.4;
 
 module stepper_sun_shaft_pin_tool(h=stepper_sun_shaft_pin_z, center=false) {
   tz = center ? 0 : h/2;

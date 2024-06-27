@@ -28,13 +28,16 @@ module gear_standard(with_bearing=false, h=gear_thickness) {
     translate([0, 0, h/2])
       gear(mm_per_tooth=gear_mm_per_tooth, number_of_teeth=gear_teeth, thickness=h, hole_diameter=0);
     if (with_bearing) {
-      translate([0, 0, gear_bearing_floor_thickness])
+      // Create bearing recess only from top of bearing in case extra height is given
+      translate([0, 0, h - bearing608_width])
         cylinder(h = h, d = bearing608_outside_d + bearing_fudge, center=false);
     }
   }
 
 }
+// outer radius includes teeth
 gear_standard_outer_radius = outer_radius(mm_per_tooth=gear_mm_per_tooth, number_of_teeth=gear_teeth);
+// root radius is without teeth
 gear_standard_root_radius = root_radius(mm_per_tooth=gear_mm_per_tooth, number_of_teeth=gear_teeth);
 
 module gear_usb() {
@@ -92,6 +95,41 @@ module _single_servo_screw_insert(d=6, h=6, edge=1, align_top=true) {
 }
 
 module gear_sun() {
+  table_shift = ((sun_table_width - (gear_standard_outer_radius*2))/-2) + 0.1;
+
+  difference() {
+    union() {
+      // This gear is a little taller than normal so there's space between where
+      // the teeth mesh and the "table top". Originally I had a spacer, but
+      // making a longer gear means no need for supports.
+      gear_standard(with_bearing=true, h=gear_sun_thickness);
+
+      // Table top
+      translate([table_shift, 0, sun_table_thickness/-2])
+      cuboid([sun_table_width, sun_table_width,  sun_table_thickness],
+              fillet=sun_table_filet, align=V_CENTER, edges=EDGES_ALL);
+    }
+
+    // Servo mounts (threaded inserts)
+    translate([-stepper_sun_shaft_offset_center, 0, -sun_table_thickness - 0.01])
+    for (i=[0,1]) {
+      insert_true_od = stepper_knurled_insert_od + (stepper_knurled_insert_wall*2);
+      insert_true_h = stepper_knurled_insert_length + stepper_knurled_insert_wall;
+
+      rotate([0, 0, i * 180])
+        translate([0, stepper_sun_mount_distance/2, 0])
+        cylinder(d=stepper_knurled_insert_od, h=stepper_knurled_insert_length);
+    }
+
+    // Bearing hole
+    cylinder(d=bearing608_bore_flange_d+1, h=sun_table_thickness*3, center=true);
+  }
+
+
+
+}
+
+module old_gear_sun() {
   box_xy = stepper_sun_mount_distance + 4;
   box_h = 3;
   box_filet = 0.4;
