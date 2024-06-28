@@ -23,7 +23,6 @@ if ("sun_stepper2arm" == model) {
 }
 
 
-
 module shaft_sun_stepper2arm() {
   d = shaft_sun_stepper2arm_d;
   h = shaft_sun_stepper2arm_h;
@@ -42,9 +41,13 @@ module shaft_sun_stepper2arm() {
         bearing_shaft_connector(male=true);
     }
 
-    // Some extra for tolerances
+
     translate([0, 0, -0.01])
-    stepper_shaft_tool(h=stepper_shaft_cut_length*1.2);
+      // Some extra height for clearance
+      stepper_shaft_tool(
+        h=stepper_shaft_cut_length + 3,
+        fudge=stepper_shaft_fudge
+      );
   }
 
 

@@ -1,5 +1,6 @@
 include <lib/BOSL/constants.scad>
 use <lib/BOSL/involute_gears.scad>
+use <lib/BOSL/torx_drive.scad>
 $fn = 90;
 
 // m2 machine screw
@@ -18,38 +19,44 @@ bearing_fudge = 0.25; // 0.01 -> 0.5 -> 0.25
 bearing_shaft_connector_h_default = m2_head_diameter*1.5;
 bearing_shaft_connector_d_default = bearing608_bore_d - bearing_fudge;
 
+_torx_outer_diam2size_lookup = [for (s = [1:0.5:200]) [torx_outer_diam(s), s]];
+// Inverse of torx_outer_diam
+function torx_outer_diam2size(d) = lookup(d, _torx_outer_diam2size_lookup);
+
 module bearing_shaft_connector(
   h=bearing_shaft_connector_h_default, d=bearing_shaft_connector_d_default,
   male=true, screw_d=1.4,
   screw_head_h=0.74, screw_head_d=2.7,
-  sides=8, two_screws=false,
+  two_screws=false,
 ) {
   // Creates a male and female side of a connecting collar between two parts.
   // Uses a screw to set: M1.4 x 5
+  z_screw_rot = 180/6; // Ensures screws are in a valley
   male_d_adjust = max((screw_head_h * 2), 1);
   if (male) {
     difference() {
-      cylinder(h=h, d=d - male_d_adjust, $fn=sides);
+      size = torx_outer_diam2size(d - male_d_adjust);
+      torx_drive(l=h, size=size, $fa=1, $fs=1);
 
       // Screw hole goes all the way through for simplicity
       if (screw_d > 0) {
         translate([0, 0, h/2])
-          rotate([0, 90, 180/sides])
+          rotate([0, 90, z_screw_rot])
           cylinder(h=d*2, d=screw_d, center=true);
       }
     }
   } else {
     difference() {
-      cylinder(h=h, d=d);
+      torx_drive(l=h, size=torx_outer_diam2size(d), $fa=1, $fs=1)
       translate([0, 0, -0.5])
         bearing_shaft_connector(
-          h=h+1, d=d, male=true, screw_d=0,
-          screw_head_h=screw_head_h, screw_head_d=screw_head_d, sides=sides);
+          h=h+1, size=d, male=true, screw_d=0,
+          screw_head_h=screw_head_h, screw_head_d=screw_head_d);
 
       if (screw_head_h > 0) {
         for(rot=(two_screws ? [0, 1] : [0])) {
           rotate([0, 0, 180 * rot])
-            rotate([0, 0, 180/sides])
+            rotate([0, 0, z_screw_rot])
             translate([d/2 - screw_head_h/2 + 0.01, 0, h/2])
             rotate([0, 90, 0])
             union() {
@@ -96,6 +103,7 @@ module shaft_usb_pin_tool(h=gear_thickness, center=false) {
 // https://components101.com/sites/default/files/component_datasheet/28byj48-step-motor-datasheet.pdf
 stepper_shaft_diameter = 5;
 stepper_shaft_width = 3;
+stepper_shaft_fudge = 0.1;
 stepper_shaft_cut_length = 6;
 stepper_body_to_shaft_tip = 10;
 stepper_shaft_collar = stepper_body_to_shaft_tip - stepper_shaft_cut_length;
@@ -104,13 +112,17 @@ stepper_mount_distance = 35;  // distance between centers of mounting holes
 stepper_body_height = 19;
 stepper_body_d = 28;
 
-module stepper_shaft_tool(h=stepper_shaft_cut_length, multiplier=1, center=false) {
-  h = h * multiplier;
+module stepper_shaft_tool(
+  h=stepper_shaft_cut_length, center=false, fudge=0
+) {
   tz = center ? 0 : h/2;
   translate([0, 0, tz])
   intersection() {
-    cylinder(h = h, d=stepper_shaft_diameter, center=true);
-    cube([stepper_shaft_diameter, stepper_shaft_width, h], center=true);
+    cylinder(h = h, d=stepper_shaft_diameter + fudge, center=true);
+    cube(
+      [stepper_shaft_diameter + fudge, stepper_shaft_width + fudge, h],
+      center=true
+    );
   }
 }
 
@@ -130,6 +142,6 @@ sun_table_width = (stepper_mount_distance + stepper_knurled_insert_od
   + (stepper_knurled_insert_wall*2) + 2);
 sun_table_filet = 0.8;
 
-shaft_sun_stepper2arm_d = bearing608_bore_d - bearing_fudge;
+shaft_sun_stepper2arm_d = bearing608_bore_d; // no fudge
 shaft_sun_stepper2arm_h = stepper_shaft_cut_length + bearing608_width
   + gear_bearing_floor_thickness + load_arm_gap_height;

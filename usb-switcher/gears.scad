@@ -18,7 +18,7 @@ if ("usb" == model) {
 } else if ("planet" == model) {
   gear_planet();
 } else if ("sun" == model) {
-  gear_sun(with_legs=true);
+  gear_sun(with_legs=false);
 
   if (detailed_debug) {
     // just a placeholder bearing
