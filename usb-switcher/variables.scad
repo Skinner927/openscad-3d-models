@@ -13,7 +13,7 @@ bearing608_bore_flange_d = 11; // edge of inside
 bearing608_outside_d = 22;
 bearing608_outside_ridge_d = bearing608_outside_d - 3;
 bearing608_width = 7;
-bearing_fudge = 0.25; // 0.01 -> 0.5 -> 0.25
+bearing_fudge = 0.10; // 0.01 -> 0.5 -> 0.25 -> 0.10
 
 // expose as it may be useful
 bearing_shaft_connector_h_default = m2_head_diameter*1.5;
@@ -132,16 +132,43 @@ stepper_knurled_insert_od = 6;
 stepper_knurled_insert_length = 6;  // actually 4 but screw is 5 and +1 for melted plastic
 stepper_knurled_insert_wall = 1;
 
+// Sun gear accepts a shaft from the top that lets the arm sit on the bearing.
+// The bearing is pressed in from the top.
+// The gear will have +load_arm_gap_height added to the bottom to give some
+// clearance for meshing gears.
+// The gear will sit on a platform called a "table". The table will have 4
+// bolt holes in the corners for attaching legs that lift the table up enough
+// for the stepper motor to sit under it.
+// The table should be thick enough to accommodate the knurled thread inserts
+// or stepper_body_to_shaft_tip, whichever is larger, to attach the stepper
+// to the underside of the table.
+// The shaft though the bearing needs to be long enough for the stepper to
+// attach (obv).
+
+/* Here's a sophisticated graphic
+
+   | gear_thickness        |     }
+   |_______________________|     }-- gear_sun_thickness
+___| load_arm_gap_height   |___  }
+| Table                        |
+|______________________________|
+###                          ### }
+###                          ### }
+###                          ### }-- sun_table_leg_height
+###                          ### }
+###                          ### }
+*/
+
 gear_sun_thickness = gear_thickness + load_arm_gap_height;
 
 sun_table_thickness = max(stepper_body_to_shaft_tip,
   (stepper_knurled_insert_length + stepper_knurled_insert_wall));
-sun_table_leg_width = 8;
+sun_table_leg_width = 8; // equal x&y
 sun_table_leg_height = stepper_body_height + 4; // arbitrary +4
 sun_table_width = (stepper_mount_distance + stepper_knurled_insert_od
   + (stepper_knurled_insert_wall*2) + 2);
 sun_table_filet = 0.8;
 
-shaft_sun_stepper2arm_d = bearing608_bore_d; // no fudge
+shaft_sun_stepper2arm_d = bearing608_bore_d - bearing_fudge;
 shaft_sun_stepper2arm_h = stepper_shaft_cut_length + bearing608_width
   + gear_bearing_floor_thickness + load_arm_gap_height;
