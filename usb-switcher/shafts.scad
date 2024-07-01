@@ -32,22 +32,19 @@ module shaft_sun_stepper2arm() {
       cylinder(d=d, h=h);
 
       // Collar against bearing
-      collar_h = stepper_shaft_cut_length/2;
-      translate([0, 0, -collar_h + stepper_shaft_cut_length])
-        cylinder(d1=d, d2=bearing608_bore_flange_d + 2, h=collar_h);
+      collar_h = load_arm_gap_height;
+      translate([0, 0, shaft_sun_stepper2arm_h - collar_h])
+        cylinder(d2=d, d1=bearing608_bore_flange_d + 2, h=collar_h);
 
       // Pin for mounting
       translate([0, 0, h - 0.001])
         bearing_shaft_connector(male=true);
     }
 
-
+    // Slot for stepper's shaft
     translate([0, 0, -0.01])
-      // Some extra height for clearance
-      stepper_shaft_tool(
-        h=stepper_shaft_cut_length + 3,
-        fudge=stepper_shaft_fudge
-      );
+      // Some extra depth for clearance
+      stepper_shaft_tool(h=stepper_shaft_cut_length + 3);
   }
 
 

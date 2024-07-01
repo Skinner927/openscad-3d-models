@@ -113,7 +113,7 @@ stepper_body_height = 19;
 stepper_body_d = 28;
 
 module stepper_shaft_tool(
-  h=stepper_shaft_cut_length, center=false, fudge=0
+  h=stepper_shaft_cut_length, center=false, fudge=stepper_shaft_fudge
 ) {
   tz = center ? 0 : h/2;
   translate([0, 0, tz])
@@ -171,5 +171,5 @@ sun_table_width = (stepper_mount_distance + stepper_knurled_insert_od
 sun_table_filet = 0.8;
 
 shaft_sun_stepper2arm_d = bearing608_bore_d - bearing_fudge;
-shaft_sun_stepper2arm_h = stepper_shaft_cut_length + bearing608_width
-  + gear_bearing_floor_thickness + load_arm_gap_height;
+shaft_sun_stepper2arm_h = (gear_sun_thickness + sun_table_thickness
+  + load_arm_gap_height);
