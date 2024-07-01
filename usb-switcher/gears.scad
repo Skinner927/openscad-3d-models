@@ -94,7 +94,7 @@ module gear_sun(with_legs = true) {
         // This gear is a little taller than normal so there's space between where
         // the teeth mesh and the "table top". Originally I had a spacer, but
         // making a longer gear means no need for supports.
-        gear_standard(with_bearing=false, h=gear_sun_thickness);
+        gear_standard(with_bearing=true, h=gear_sun_thickness);
 
         // Table top
         translate([table_shift, 0, sun_table_thickness/-2])
@@ -102,14 +102,9 @@ module gear_sun(with_legs = true) {
                 fillet=sun_table_filet, align=V_CENTER, edges=EDGES_ALL);
       }
 
-      // Recess for bearing in gear and all the way down through the table
-      bearing_hole_tool_h = gear_sun_thickness + sun_table_thickness;
-      translate([0, 0, (-bearing_hole_tool_h + gear_sun_thickness)-gear_bearing_floor_thickness])
-        cylinder(d=bearing608_outside_d + bearing_fudge, h=bearing_hole_tool_h);
-
-      // Bearing hole top of gear
-      translate([0, 0, gear_sun_thickness/2])
-        cylinder(d=bearing608_bore_flange_d+1, h=gear_sun_thickness);
+      // Hole through gear center and table
+      translate([0, 0, 0])
+        cylinder(d=bearing608_outside_ridge_d, h=(gear_sun_thickness+sun_table_thickness)*3, center=true);
 
       // Servo mounts (threaded inserts)
       translate([-stepper_shaft_center_offset, 0, -sun_table_thickness - 0.01])

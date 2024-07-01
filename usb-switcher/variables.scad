@@ -159,6 +159,7 @@ ___| load_arm_gap_height   |___  }
 ###                          ### }
 */
 
+/* sun gear */
 gear_sun_thickness = gear_thickness + load_arm_gap_height;
 
 sun_table_thickness = max(stepper_body_to_shaft_tip,
