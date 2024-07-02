@@ -12,12 +12,17 @@ model = "sun_stepper2arm";
 preview_bearings = $preview && false;
 
 if ("sun_stepper2arm" == model) {
-  shaft_sun_stepper2arm();
+  // rotate 180 for better
+  rotate([0, $preview ? 0 : 180, 0])
+    shaft_sun_stepper2arm();
 
   if (preview_bearings) {
-    bz = shaft_sun_stepper2arm_h - bearing608_width - gear_bearing_floor_thickness - load_arm_gap_height;
+    bz = shaft_sun_stepper2arm_h - bearing608_width - load_arm_gap_height;
     bearing(pos=[0, 0, bz]);
   }
+} else if ("main_arm" == model) {
+  main_arm();
+
 } else {
   assert(false, "Invalid 'model' variable");
 }
@@ -33,8 +38,8 @@ module shaft_sun_stepper2arm() {
 
       // Collar against bearing
       collar_h = load_arm_gap_height;
-      translate([0, 0, shaft_sun_stepper2arm_h - collar_h])
-        cylinder(d2=d, d1=bearing608_bore_flange_d + 2, h=collar_h);
+      translate([0, 0, h - collar_h])
+        cylinder(d=bearing608_bore_flange_d + 2, h=collar_h);
 
       // Pin for mounting
       translate([0, 0, h - 0.001])
@@ -46,6 +51,28 @@ module shaft_sun_stepper2arm() {
       // Some extra depth for clearance
       stepper_shaft_tool(h=stepper_shaft_cut_length + 3);
   }
+}
 
+module main_arm() {
+
+  union() {
+    // connector
+    translate([0, 0, -0.002])
+      rotate([0, 0, 140])
+      bearing_shaft_connector(male=false);
+
+    // arm body
+    arm_h = 4;
+    arm_w = bearing608_outside_d + 4;
+    arm_len = 30;
+    translate([0, 0, -0.001])
+    hull() {
+      for (tx=[0, arm_len]) {
+        translate([tx, 0, 0])
+          cylinder(h=arm_h, d=arm_w);
+      }
+    }
+
+  }
 
 }

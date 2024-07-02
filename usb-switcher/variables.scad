@@ -47,10 +47,11 @@ module bearing_shaft_connector(
     }
   } else {
     difference() {
-      torx_drive(l=h, size=torx_outer_diam2size(d), $fa=1, $fs=1)
+      cylinder(h=h, d=d, $fa=1, $fs=1);
+
       translate([0, 0, -0.5])
         bearing_shaft_connector(
-          h=h+1, size=d, male=true, screw_d=0,
+          h=h+1, d=d, male=true, screw_d=0,
           screw_head_h=screw_head_h, screw_head_d=screw_head_d);
 
       if (screw_head_h > 0) {
@@ -103,7 +104,7 @@ module shaft_usb_pin_tool(h=gear_thickness, center=false) {
 // https://components101.com/sites/default/files/component_datasheet/28byj48-step-motor-datasheet.pdf
 stepper_shaft_diameter = 5;
 stepper_shaft_width = 3;
-stepper_shaft_fudge = 0.1;
+stepper_shaft_fudge = 0.2;
 stepper_shaft_cut_length = 6;
 stepper_body_to_shaft_tip = 10;
 stepper_shaft_collar = stepper_body_to_shaft_tip - stepper_shaft_cut_length;
@@ -171,5 +172,6 @@ sun_table_width = (stepper_mount_distance + stepper_knurled_insert_od
 sun_table_filet = 0.8;
 
 shaft_sun_stepper2arm_d = bearing608_bore_d - bearing_fudge;
+// -0.2 for a weee bit of clearance for the stepper shaft bottoming out.
 shaft_sun_stepper2arm_h = (gear_sun_thickness + sun_table_thickness
-  + load_arm_gap_height);
+  + load_arm_gap_height) - stepper_shaft_collar - 0.2;
