@@ -18,7 +18,7 @@ if ("usb" == model) {
 } else if ("planet" == model) {
   gear_planet();
 } else if ("sun" == model) {
-  gear_sun(with_legs=false);
+  gear_sun(with_legs=true);
 
   if (detailed_debug) {
     // just a placeholder bearing
@@ -85,7 +85,12 @@ module gear_planet() {
 }
 
 module gear_sun(with_legs = true) {
+  // How far off center to shift the gear for stepper alignment
   table_shift = ((sun_table_width - (gear_standard_outer_radius*2))/-2) + 0.1;
+
+  leg_x = (sun_table_width - sun_table_leg_width) / 2;
+  leg_y = (sun_table_width - sun_table_leg_width) / 2;
+  leg_z = (sun_table_thickness / -2) + 0.01;
 
   union() {
     // Build table and gear
@@ -116,15 +121,36 @@ module gear_sun(with_legs = true) {
           translate([0, stepper_mount_distance/2, 0])
           cylinder(d=stepper_knurled_insert_od, h=stepper_knurled_insert_length);
       }
+
+      if (!with_legs) {
+        // Screw holes for legs
+        translate([table_shift, 0, 0])
+        for (i = [0:3]) {
+          xm = i>1 ? 1 : -1;
+          ym = i%2 ? 1 : -1;
+
+          translate([xm*leg_x, ym*leg_y, -sun_table_thickness - m2_head_depth + 0.5])
+          union() {
+            // screw hole
+            translate([0, 0, -1])
+              cylinder(h=sun_table_thickness+2, d=2);
+
+            // screw head
+            translate([0, 0, sun_table_thickness])
+              cylinder(h=m2_head_depth+1, d=m2_head_diameter);
+
+            // square for attaching legs
+            stlb = sun_table_leg_block * 1.1; // fudge
+            translate([0, 0, (sun_table_leg_block/2) - 1])
+              cube([stlb, stlb, sun_table_leg_block+2], center=true);
+          }
+        }
+      }
     }
 
     // Add legs to table
-    translate([table_shift, 0, sun_table_thickness/-2])
     if (with_legs) {
-      leg_x = (sun_table_width - sun_table_leg_width) / 2;
-      leg_y = (sun_table_width - sun_table_leg_width) / 2;
-      leg_z = (sun_table_thickness / -2) + 0.01;
-
+      translate([table_shift, 0, sun_table_thickness/-2])
       for (i = [0:3]) {
         xm = i>1 ? 1 : -1;
         ym = i%2 ? 1 : -1;

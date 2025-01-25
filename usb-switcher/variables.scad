@@ -29,6 +29,8 @@ module bearing_shaft_connector(
   screw_head_h=0.74, screw_head_d=2.7,
   two_screws=false,
 ) {
+  // When screw_d == 0, no screw hole will be made
+
   // Creates a male and female side of a connecting collar between two parts.
   // Uses a screw to set: M1.4 x 5
   z_screw_rot = 180/6; // Ensures screws are in a valley
@@ -166,6 +168,7 @@ gear_sun_thickness = gear_thickness + load_arm_gap_height;
 sun_table_thickness = max(stepper_body_to_shaft_tip,
   (stepper_knurled_insert_length + stepper_knurled_insert_wall));
 sun_table_leg_width = 8; // equal x&y
+sun_table_leg_block = sun_table_leg_width / 2; // connect legs
 sun_table_leg_height = stepper_body_height + 4; // arbitrary +4
 sun_table_width = (stepper_mount_distance + stepper_knurled_insert_od
   + (stepper_knurled_insert_wall*2) + 2);
