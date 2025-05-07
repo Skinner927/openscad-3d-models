@@ -99,8 +99,10 @@ difference ()
     v_width = 4;
     v_space = v_width * 2;
     v_start = 20;
+    //v_num_vents = (length - v_start*2)/(v_width+v_space/2);
+    v_num_vents = 4;
     for(jmp = [0, width - wall_thickness])
-        for(i = [0:(length - v_start*2)/(v_width+v_space/2)])
+        for(i = [0:v_num_vents])
         translate([
             length - v_start - v_space*i,
             wall_thickness/-2 + jmp,
