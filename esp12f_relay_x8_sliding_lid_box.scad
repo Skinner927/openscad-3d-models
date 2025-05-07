@@ -1,5 +1,3 @@
-// Original https://www.thingiverse.com/thing:468917
-
 width = 165;
 length = 140;
 height = 40 + 3; // +3 for 6 mount depth - wall_thick
@@ -84,12 +82,36 @@ difference ()
         }
     }
     
-    // holes for mounting whole box
-    #translate([20, width/2, -1]) {
+    // holes for mounting
+    translate([20, width/2, -1]) {
         cylinder(h=wall_thickness*3, d=5.75);
         translate([77, 0, 0])
             cylinder(h=wall_thickness*3, d=5.75);
     }
+    
+    // Hole for wires   
+    translate([0, width/3, height/2])
+        rotate([0, 90, 0])
+        cylinder(h=wall_thickness*4, d=20, center=true);
+    
+    // vents
+    v_thick = wall_thickness*2;
+    v_width = 4;
+    v_space = v_width * 2;
+    v_start = 20;
+    for(jmp = [0, width - wall_thickness])
+        for(i = [0:(length - v_start*2)/(v_width+v_space/2)])
+        translate([
+            length - v_start - v_space*i,
+            wall_thickness/-2 + jmp,
+            height/4 + height/2])
+        rotate([0, 90, 90])
+        hull() {
+            cylinder(h=v_thick, d=v_width);
+            translate([height/2, 0, 0])
+                cylinder(h=v_thick, d=v_width);
+        }
+
     
 } // /difference
 
