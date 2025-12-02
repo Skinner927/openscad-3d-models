@@ -1,13 +1,34 @@
+// Crenels are the cubes near each corner. Use this to modify their width, depth, and height.
 crenel_wdh = [4.4, 6.17, 7];
 
-gap_x = 10.5; // distance between crenels
-sliver_x = 1.4; // gap between crenel and bridge
-gap_y = 6; // most critical; distance between crenels
+// Distance between crenels across the Y-axis (left to right)
+y_distance_between_crenels = 10.5;
+
+// Distance between crenels across the X-axis (face to face)
+x_distance_between_crenels = 6;
+
+// Size of the gap between the crenel and the bridge that connects the opposite pairs of crenels
+crenel_to_bridge_gap = 1.4;
+
+bridge_thickness = 2.2;
+
+// height of the wall on top of the bridge between the crenels
+wall_height = 1.98;
+
+back_shelf_depth = 2;
+back_shelf_height = 2.7;
+
+
+module __Customizer_Limit__ () {}  // Hide following assignments from Customizer.
+
+gap_x = y_distance_between_crenels;
+sliver_x = crenel_to_bridge_gap;
+gap_y = x_distance_between_crenels;
 
 bridge_wdh = [
   gap_x - (2*sliver_x),
   (2*crenel_wdh.y)+gap_y,
-  2.45 - 0.25
+  bridge_thickness
 ];
 
 assembly();
@@ -17,7 +38,7 @@ module assembly() {
   translate([0, 0, bridge_wdh.z/2])
     cube(bridge_wdh, center=true);
 
-  ridge_wdh = [gap_x + (2*crenel_wdh.x), 1, bridge_wdh.z + 1.98];
+  ridge_wdh = [gap_x + (2*crenel_wdh.x), 1, bridge_wdh.z + wall_height];
   for (y = [1, -1]) {
     // ridges mesh into bridge and crenels butt up against ridges
     ridge_trans_y = y*(bridge_wdh.y/2 - ridge_wdh.y/2);
@@ -25,7 +46,7 @@ module assembly() {
       cube(ridge_wdh, center=true);
 
     // shelf in the back
-    shelf_wdh = [ridge_wdh.x, 2, 2.7];
+    shelf_wdh = [ridge_wdh.x, back_shelf_depth, back_shelf_height];
     tri_chamf_h = ridge_wdh.z - shelf_wdh.z - 0.25;
     translate([
       0,
