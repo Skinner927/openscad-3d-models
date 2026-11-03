@@ -49,8 +49,37 @@ module x_base() {
         // servo-lead exit notch at the rear edge, plus zip-tie slots
         translate([x_shaft_x - 6, xb_y0 - 1, -1]) cube([12, 8, xb_t + 2]);
         for (dx = [-10, 10]) translate([x_shaft_x + dx - 1.5, xb_y0 + 12, -1]) cube([3, 5, xb_t + 2]);
+        // speed holes: the plywood gives the stiffness, so keep only a frame
+        translate([0, 0, -1]) linear_extrude(xb_t + 2) xb_windows_2d();
     }
 }
+
+// Through-cutouts in the X base. Kept: an xb_frame perimeter, a strip
+// under each rail, the servo holder footprint (+ margin), and a pad
+// around every wood screw.
+xb_frame  = 8;
+xb_rib    = 8;      // cross ribs between the rails
+xb_round  = 4;      // window corner radius
+xb_holder_x = [x_shaft_x - holder_hw - 6, x_shaft_x + holder_hw + 6];
+xb_rail_keep = [x_rail_y[0] - runner_w / 2 - 6, x_rail_y[1] - dt_w / 2 - 6,
+                x_rail_y[1] + dt_w / 2 + 6];
+module xb_windows_2d() {
+    x0 = xb_x0 + xb_frame;  x1 = xb_x1 - xb_frame;
+    ry0 = xb_y0 + xb_frame; ry1 = xb_rail_keep[0];          // behind the runner
+    my0 = x_rail_y[0] + runner_w / 2 + 6; my1 = xb_rail_keep[1];  // between the rails
+    n = 3;                                                  // windows between the rails
+    w = (x1 - x0 - (n - 1) * xb_rib) / n;
+    offset(r = xb_round) offset(delta = -xb_round) difference() {
+        union() {
+            translate([x0, ry0]) square([xb_holder_x[0] - x0, ry1 - ry0]);
+            translate([xb_holder_x[1], ry0]) square([x1 - xb_holder_x[1], ry1 - ry0]);
+            for (i = [0:n - 1]) translate([x0 + i * (w + xb_rib), my0]) square([w, my1 - my0]);
+        }
+        for (p = xb_screws) translate(p) circle(r = m4_head_d / 2 + 4);
+    }
+}
+echo("CHECK", "xb_window_min", min(xb_holder_x[0] - xb_x0 - xb_frame,
+                                     xb_rail_keep[1] - (x_rail_y[0] + runner_w / 2 + 6)));
 
 // ---------------- X carriage (modelled at x_pos = 0) ----------------
 module y_servo_holder_local() {

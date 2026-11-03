@@ -10,7 +10,7 @@ include <assembly_lib.scad>
 show_port = 0;   // [0, 1]
 // 0 = retracted, 20 = plugged in
 y_pos = 20;      // [0:1:20]
-show_plywood = true;
+show_plywood = false;
 
 x_pos = port_x[show_port];
 

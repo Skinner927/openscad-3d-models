@@ -74,6 +74,7 @@ EXPECT = {
     "pillar_above_flex": (">=", 5, 1e-6),
     "dt_chamfer": (">=", 0.5, 1e-6),
     "xbase_tower_gap": (">=", 1, 1e-6),
+    "xb_window_min": (">=", 15, 1e-6),
 }
 
 # name -> (op, value, message)  failing these prints WARN, not FAIL
@@ -104,6 +105,7 @@ MUST_BE_EMPTY = [
     "tests/collide_full.scad",
     "tests/probe_port_hole.scad",
     "tests/probe_plug_seat.scad",
+    "tests/probe_xbase_lightened.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')
