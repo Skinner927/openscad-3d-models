@@ -1,0 +1,39 @@
+I need you to build OpenSCAD models that I can 3D print to complete a task. I want to build a robot/machine that can unplug a USB from one computer and move it to another. Thankfully I am using magnetic USB extension cables so the machine doesn't have to be so perfect as to plug in a USB cable.
+
+There will be 2 female USB extensions that will need to be mounted in static locations. Then I will have a male USB extension cable that the machine will move between the static female USB extensions.
+
+Assuming the design will consist of multiple separate assemblies, I can mount them all to a sheet of plywood to stabilize.
+
+I would like if the mounts for the female and male extension ends allow for minute adjustments. Maybe something like a "Positioning Stage"? The male end might also benefit if it can wiggle/flex to allow for some slop as the magnets should be strong enough to ensure proper alignment as long as it's close and can wiggle a little.
+
+The female ends are actually bulkhead connectors, so they are mounted though a 16mm diameter hole. The male end is L shaped. The part you'd clamp to is 12mm tall, 6mm thick, and 11mm wide. The magnetic connector's center is 13mm below the bottom of the clamping area and is bent 90 degrees. Ensure the space above allows for the rest of the extension cable to leave the mount.
+
+My 3D printer's print area is 250x250x250mm. I have access to sg90 and MG995 servos. Prefer to use M3 and M4 screws/bolts and nuts, but if some locations require smaller hardware that's fine. I also have access to 608 bearings if needed. The majority of parts should be 3D printed. Do not worry about electronics beyond servos and where wires route. At a later date I'll worry about getting a proper controller board and programming everything.
+
+
+--------
+QUESTION
+--------
+
+How are the two female bulkhead ports going to sit relative to each other on the plywood: roughly how far apart, and facing which direction (both facing up, both facing sideways, or facing each other)?
+
+====== answer ====
+
+They will need to face sideways. They cannot be mounted to the plywood. I you'll have to design whatever they're mounted to, which at minimum would be a 90 degree bracket, but remember I also need to be able to make small
+  adjustments for alignment. Assume the plywood is just the table top this will all be assembled on.
+
+--------
+QUESTION
+--------
+
+I need two sets of measurements from you before I can finish the design. A caliper or ruler is enough.
+
+1. Male plug magnetic head: how wide and tall it is, and how far its face sticks out in +Y (toward the port) past
+   the 6mm-thick clamp block. This decides whether the clamp and flexure hit the port plate when the plug is fully in.
+2. Female bulkhead: the flange's outer diameter and thickness, the nut's size and thickness, whether the magnetic face sits flush, sticks out, or is recessed relative to the flange, and how long the body is behind the
+   panel. This sets the plate thickness and how much clearance the tower needs behind it.
+
+====== answer ====
+
+1. The male magnetic head sticks out 5mm past the clamp block.
+2. The female bulkhead has a diameter of 15mm. The threaded area from the front face to the back stop is 14mm. The threaded area has a flat spot so you can key the hole to prevent rotation. The diameter measurement of this flat spot with calpiers is 14mm. The backstop has a diameter of 20mm and the nut is a hex nut with flat to flat diameter of 19.92mm. The connector is flush with the face. From the back of the flang you'll need at least 40mm of clearance for the built-in strain release and body.
