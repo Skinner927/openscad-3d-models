@@ -71,6 +71,7 @@ EXPECT = {
     "clamp_preload": (">=", 0.3, 1e-6),
     "clamp_x_play": ("<=", 0.15, 1e-6),
     "horn_screw_land": ("<=", 3, 1e-6),
+    "brace_slit_depth_margin": (">=", 0, 1e-6),
     "pillar_above_flex": (">=", 5, 1e-6),
     "dt_chamfer": (">=", 0.5, 1e-6),
     "xbase_tower_gap": (">=", 1, 1e-6),
@@ -106,6 +107,7 @@ MUST_BE_EMPTY = [
     "tests/probe_port_hole.scad",
     "tests/probe_plug_seat.scad",
     "tests/probe_xbase_lightened.scad",
+    "tests/collide_servo_holder.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

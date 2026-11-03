@@ -131,8 +131,16 @@ module mg995_model() {
         translate([servo_body_cx - servo_ear_len / 2, -servo_body[1] / 2, servo_ear_z])
             cube([servo_ear_len, servo_body[1], servo_ear_t]);
         cylinder(d = 12, h = servo_pinion_up);
+        // ear braces: triangles on the shaft side of each ear, body face -> ear tip
+        for (e = servo_brace_spans()) translate([0, servo_brace_w / 2, servo_ear_top])
+            rotate([90, 0, 0]) linear_extrude(servo_brace_w)
+                polygon([[e[0], 0], [e[1], 0], [e[0], servo_brace_h]]);
     }
 }
+// [body face x, ear tip x] for each ear (upright frame)
+function servo_brace_spans() = [
+    [servo_shaft_off - servo_body[0], servo_body_cx - servo_ear_len / 2],
+    [servo_shaft_off, servo_body_cx + servo_ear_len / 2]];
 
 // Holder for an inverted servo (separate print, plate on the bed).
 // Upright frame: ear plate on the shaft side of the ears, a solid block
@@ -168,6 +176,10 @@ module mg995_holder(floor_up = holder_floor_up) {
             translate([servo_body_cx + sx * servo_hole_spacing / 2, sy * servo_hole_gap / 2, servo_ear_top - 0.01])
                 cylinder(d = m3_tap, h = 14, $fn = 24);
         for (p = holder_floor_pts) translate([p[0], p[1], floor_up - 12]) cylinder(d = m3_tap, h = 12.1, $fn = 24);
+        // slits for the ear braces, between each ear's two screw holes
+        for (e = servo_brace_spans())
+            translate([min(e) - 0.5, -servo_brace_slit / 2, servo_ear_top - 0.01])
+                cube([abs(e[1] - e[0]) + 1, servo_brace_slit, holder_t + 0.02]);
     }
 }
 
@@ -180,6 +192,7 @@ module holder_floor_holes(t) {
 }
 
 echo("CHECK", "holder_overhang", holder_overhang(holder_side_x1));
+echo("CHECK", "brace_slit_depth_margin", holder_t - servo_brace_h);
 
 module at_inverted_servo(x, y, pinion_z0, a) {
     translate([x, y, pinion_z0 + gear_thick + servo_pinion_up]) rotate([0, 0, a]) rotate([180, 0, 0])
