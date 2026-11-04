@@ -82,7 +82,7 @@ function _tooth(z, m, pa) = let(
 module pinion(teeth = pinion_teeth, mod = gear_mod, thick = gear_thick) {
     rr = mod * teeth / 2 - 1.25 * mod;
     difference() {
-        linear_extrude(thick) union() {
+        linear_extrude(height=thick, convexity=4) union() {
             circle(r = rr + 0.01, $fn = teeth * 4);
             for (i = [0:teeth - 1]) rotate(i * 360 / teeth) polygon(_tooth(teeth, mod, gear_pa));
         }

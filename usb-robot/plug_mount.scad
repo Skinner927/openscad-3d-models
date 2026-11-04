@@ -64,7 +64,7 @@ module poly_beam(pts, w) {
 }
 
 // XZ outline helpers: 2D (x, z) extruded along +Y from y0, thickness t
-module xz_extrude(y0, t) { translate([0, y0 + t, 0]) rotate([90, 0, 0]) linear_extrude(t) children(); }
+module xz_extrude(y0, t, convexity=4) { translate([0, y0 + t, 0]) rotate([90, 0, 0]) linear_extrude(height=t, convexity=convexity) children(); }
 
 module plug_flexure() {
   difference() {
@@ -92,10 +92,10 @@ module plug_flexure() {
     // in from below)
     translate([0, blk_y0 + plug_by / 2, blk_z1 - 0.01]) cylinder(d=relief_hole_d, h=1.5 + 0.02);
     // payload screws into the stage z-slider
-    for (p = payload_pts) translate([p[0], -0.01, p[1]]) rotate([-90, 0, 0]) screw_hole(m3_d, flex_t);
+    for (p = payload_pts) translate([p[0], -0.5, p[1]]) rotate([-90, 0, 0]) screw_hole(m3_d, flex_t + 1);
     // stop-pin hole (through) and strap screws (through the top bar)
-    translate([0, -0.01, pin_z]) rotate([-90, 0, 0]) screw_hole(pin_hole, flex_t);
-    for (x = strap_scr) translate([x, -0.01, strap_scr_z]) rotate([-90, 0, 0]) screw_hole(m3_d, flex_t);
+    translate([0, -0.5, pin_z]) rotate([-90, 0, 0]) screw_hole(pin_hole, flex_t + 1);
+    for (x = strap_scr) translate([x, -0.5, strap_scr_z]) rotate([-90, 0, 0]) screw_hole(m3_d, flex_t + 1);
     // cap screws, tapped into the cradle side walls
     for (sx = [-1, 1])
       translate([sx * crad_scr, crad_y1 + 0.01, (blk_z0 + blk_z1) / 2])
@@ -128,8 +128,8 @@ module plug_flex_stop() {
       translate([0, 0.01, pin_z]) rotate([90, 0, 0]) cylinder(d=pin_d, h=flex_stop_gap + 2);
     }
     for (x = strap_scr)
-      translate([x, -flex_stop_gap - 0.01, strap_scr_z]) rotate([-90, 0, 0])
-          screw_hole(m3_d, strap_t + flex_stop_gap);
+      translate([x, -flex_stop_gap - 0.5, strap_scr_z]) rotate([-90, 0, 0])
+          screw_hole(m3_d, strap_t + flex_stop_gap + 1);
   }
 }
 
