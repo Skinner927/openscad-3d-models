@@ -104,6 +104,10 @@ MUST_BE_NONEMPTY = [
     "tests/probe_jig_xbase_px.scad",
     "tests/probe_jig_xbase_nx.scad",
     "tests/probe_jig_xbase_py.scad",
+    "tests/probe_x_rack_on_bed.scad",
+    "tests/probe_y_rack_on_bed.scad",
+    "tests/probe_zs_arrow_up.scad",
+    "tests/probe_xs_arrow_up.scad",
 ]
 
 MUST_BE_EMPTY = [
@@ -121,6 +125,8 @@ MUST_BE_EMPTY = [
     "tests/collide_servo_holder.scad",
     "tests/collide_plug_cradle.scad",
     "tests/probe_pinion_print.scad",
+    "tests/probe_zs_arrow.scad",
+    "tests/probe_xs_arrow.scad",
     "tests/collide_tower_jig.scad",
 ]
 

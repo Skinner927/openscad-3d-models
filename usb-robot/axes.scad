@@ -97,8 +97,10 @@ module x_carriage() {
     difference() {
         union() {
             translate([xc_x0, xc_y0, xc_z0]) cube([xc_len, xc_y1 - xc_y0, xc_h]);
-            // X rack on the -Y face, teeth toward -Y
-            translate([xc_x0, xc_y0 + 0.01, x_rack_z0]) mirror([0, 1, 0]) rack(xc_len, base_h = rack_base);
+            // X rack on the -Y face, teeth toward -Y. Runs down to the
+            // carriage's bottom face so it prints without supports.
+            translate([xc_x0, xc_y0 + 0.01, xc_z0]) mirror([0, 1, 0])
+                rack(xc_len, thick = x_rack_z0 - xc_z0 + gear_thick, base_h = rack_base);
             // Y rail on top, under the Y carriage
             translate([-xs_xc, xc_y0, xc_top]) rotate([0, 0, 90]) dovetail_rail(xc_y1 - xc_y0);
         }
@@ -136,7 +138,8 @@ module y_carriage() {
         union() {
             translate([yc_x0, yc_y0, yc_z0]) cube([yc_x1 - yc_x0, yc_len, yc_h]);
             // Y rack on the -X face, teeth toward -X
-            translate([yc_x0 + 0.01, yc_y0, y_rack_z0]) rotate([0, 0, 90]) rack(yc_len, base_h = rack_base);
+            translate([yc_x0 + 0.01, yc_y0, yc_z0]) rotate([0, 0, 90])
+                rack(yc_len, thick = y_rack_z0 - yc_z0 + gear_thick, base_h = rack_base);  // down to the bed
             // cable strain-relief pillar at the rear, in line with the plug
             translate([xs_xc - pillar_w / 2, yc_y0, yc_z0]) cube([pillar_w, yc_pillar_d, pillar_top - yc_z0]);
         }

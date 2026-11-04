@@ -30,6 +30,13 @@ module stage_base() {
     }
 }
 
+// Orientation mark: up-arrow (+Z) recessed zs_arrow_depth into a face
+// that looks toward +Y, centred on the origin (head 9 wide, tip 7 up).
+module up_arrow_cut() {
+    translate([0, 0.01, 0]) rotate([90, 0, 0]) linear_extrude(zs_arrow_depth + 0.01)
+        polygon([[-1.5, -7], [1.5, -7], [1.5, 1], [4.5, 1], [0, 7], [-4.5, 1], [-1.5, 1]]);
+}
+
 // Upper stack shares the x-slider's X offset.
 module stage_x_slider() {
     x0 = xs_xc - xs_len / 2;
@@ -51,6 +58,8 @@ module stage_x_slider() {
             screw_hole(m3_d, xs_w / 2 - 3);
         translate([xs_xc + 8 - (m3_nut_af + clr) / 2, 9 - (m3_nut_t + 0.4) / 2, stage_base_h + 2.5 - 3.3])
             cube([m3_nut_af + clr, m3_nut_t + 0.4, xs_h]);
+        // recessed up-arrow on the Z rail's front face (matches the z-slider's)
+        translate([xs_xc, col_y1 + dt_h, xs_top + col_h / 2]) up_arrow_cut();
         // cap screws (tapped into column top)
         for (sx = [-8, 8]) translate([xs_xc + sx, col_y0 + 5, col_top - 10])
             screw_hole(m3_tap, 10.1);
@@ -70,6 +79,9 @@ module stage_z_slider() {
             translate([xs_xc + p[0] - (m3_nut_af + clr) / 2, payload_face_y - 4 - (m3_nut_t + 0.4) / 2, zs_z0 - 1])
                 cube([m3_nut_af + clr, m3_nut_t + 0.4, zs_h / 2 + 1 + 3.3]);
         }
+        // recessed up-arrow on the payload face: shows which way is up when
+        // mounting the port bracket / flexure
+        translate([xs_xc, payload_face_y, stage_payload_z]) up_arrow_cut();
         // Z adjust: through hole, nut slot from the -X side 5 below the top
         translate([xs_xc + zs_screw_x, zs_screw_y, zs_z0 + zs_h - zs_adj_hole]) screw_hole(m3_d, zs_adj_hole + 0.1);
         translate([x0 - 1, zs_screw_y - (m3_nut_af + clr) / 2, zs_z0 + zs_h - 5 - (m3_nut_t + 0.4) / 2])

@@ -118,6 +118,7 @@ zs_screw_y = col_y1 + 3; // Z adjust screw Y (clear of payload nut slots)
 zs_screw_x = -12; // Z adjust screw X offset: keeps it clear of the bulkhead body
 payload_hole_depth = 9.5; // M3 holes into the z-slider payload face
 bracket_screw_len = 12; // port bracket -> z-slider screw (README BOM)
+zs_arrow_depth = 0.4; // up-arrows recessed in the z-slider payload face and the Z rail
 
 /* [World layout] */
 port_z = 80; // port centre height above plywood
