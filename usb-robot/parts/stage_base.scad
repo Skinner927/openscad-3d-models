@@ -1,7 +1,5 @@
-// Positioning stage base. Print as shown. Qty 3 (one with mirrored = true, for port tower B).
+// Positioning stage base. Print as shown. Qty 3, all identical: the base
+// is symmetric, so turned 180 deg it is also the mirror-image base that
+// port tower B needs (tests/check_stage_base_symmetric.scad).
 include <../stage.scad>
-/* [Options] */
-// true for port tower B (mirror image, X adjust screw faces outward)
-mirrored = false;
-
-stage_hand(mirrored) stage_base();
+stage_base();

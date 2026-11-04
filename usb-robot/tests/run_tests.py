@@ -45,7 +45,10 @@ TARGETS = [
 
 # name -> (op, value, tol)   value may be a number or another CHECK name
 EXPECT = {
-    "d_hole_flat": ("==", 6.9, 1e-6),
+    # D-hole flat edge: a real gap so the thread goes in, but no looser than
+    # the original 0.4 mm (about +/-7 deg of twist with a 15 mm hole)
+    "d_hole_flat": ("<=", 6.9, 1e-6),
+    "d_hole_flat_gap": (">", 0, 1e-6),
     "stage_travel_x": (">=", 10, 1e-6),
     "stage_travel_z": (">=", 10, 1e-6),
     "x_travel_180": (">=", "x_travel", 1e-6),
@@ -108,6 +111,8 @@ MUST_BE_NONEMPTY = [
     "tests/probe_y_rack_on_bed.scad",
     "tests/probe_zs_arrow_up.scad",
     "tests/probe_xs_arrow_up.scad",
+    "tests/probe_xs_col_support_n.scad",
+    "tests/probe_xs_col_support_p.scad",
 ]
 
 MUST_BE_EMPTY = [
@@ -125,9 +130,11 @@ MUST_BE_EMPTY = [
     "tests/collide_servo_holder.scad",
     "tests/collide_plug_cradle.scad",
     "tests/probe_pinion_print.scad",
+    "tests/probe_pinion_center_thru.scad",
     "tests/probe_zs_arrow.scad",
     "tests/probe_xs_arrow.scad",
     "tests/collide_tower_jig.scad",
+    "tests/check_stage_base_symmetric.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

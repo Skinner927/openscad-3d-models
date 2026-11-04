@@ -38,9 +38,9 @@ tower bases exactly.
 1. Screw the X base down.
 2. Lay the jig on the plywood with its straight front strip against the
    X base's back edge and its two arms around the X base's back corners.
-3. Drop the two **bare** stage bases into the pockets: normal base on the
-   left (tower A), mirrored base on the right (tower B), adjust-screw
-   tabs facing outward.
+3. Drop the two **bare** stage bases into the pockets with their
+   adjust-screw tabs facing outward (left on tower A, right on tower B).
+   It's the same part both times, just turned around.
 4. Screw both bases down, lift the jig straight off, then build the
    stages on the bases.
 
@@ -49,14 +49,14 @@ critical: the stages and the servo end points take up the error.
 
 ## Print list
 
-Ready-made STLs are in `stl/`, with `*_mirrored.stl` for tower B. Re-export them after changing any parameter in `common.scad` by running `./export_stls.sh` (about 30 seconds).
+Ready-made STLs are in `stl/`, with `*_mirrored.stl` for tower B (stage base excepted: one part serves both sides). Re-export them after changing any parameter in `common.scad` by running `./export_stls.sh` (about 30 seconds).
 
 Use PLA or PETG with 3–4 walls and 30% infill unless noted. Every part
 fits a 250mm bed.
 
 | File (`parts/`)       | Qty | Orientation / notes                                        |
 | --------------------- | --- | ---------------------------------------------------------- |
-| `stage_base.scad`     | 3   | as modelled. **Print 1 with `mirrored = true`** (tower B)  |
+| `stage_base.scad`     | 3   | as modelled. Same part for every stage (turn it around)    |
 | `stage_x_slider.scad` | 3   | upright, slot down (bridges). 1 mirrored                   |
 | `stage_z_slider.scad` | 3   | lying on payload face. 1 mirrored                          |
 | `stage_z_cap.scad`    | 3   | flat. 1 mirrored                                           |
@@ -71,8 +71,9 @@ fits a 250mm bed.
 | `plug_flex_stop.scad` | 2   | pin up                                                     |
 | `tower_jig.scad`      | 1   | flat as exported. Tower-base placement jig (see Layout)    |
 
-The mirrored stage set goes on **port tower B**, so both towers' X adjust
-screws face outward. The male stage can be either hand.
+The mirrored x-slider, z-slider and cap go on **port tower B**, so both
+towers' X adjust screws face outward. The stage base needs no mirrored
+version: turned 180° it is its own mirror image. The male stage can be either hand.
 
 ## Hardware
 
@@ -112,7 +113,9 @@ screw.
       Fit the nut on the front.
 2. **Pinions:** screw each pinion onto a round horn with the horn's small
    screws. Centre the servo (send a 1500µs pulse) before pressing the horn
-   on, so the servo's travel is centred on the rack.
+   on, so the servo's travel is centred on the rack. The servo's centre
+   screw goes through the pinion's 7mm centre hole and seats on the horn
+   hub, so the stock screw is long enough.
 3. **Servos:** both mount **upside down** (shaft pointing down) in the
    two identical printed holders. The ears rest on the holder plate and
    take M3 self-tappers.

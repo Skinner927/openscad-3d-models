@@ -38,6 +38,7 @@ module up_arrow_cut() {
 }
 
 // Upper stack shares the x-slider's X offset.
+col_ovh = (col_w - xs_len) / 2;   // column overhang past the block, per X side
 module stage_x_slider() {
     x0 = xs_xc - xs_len / 2;
     difference() {
@@ -46,6 +47,11 @@ module stage_x_slider() {
             // column
             translate([xs_xc - col_w / 2, col_y0, xs_top - 0.01]) cube([col_w, col_t, col_h + 0.01]);
             translate([xs_xc, col_y1, xs_top]) zrail_frame() dovetail_rail(col_h);
+            // 45 deg supports under the column where it overhangs the block (X sides)
+            for (sx = [-1, 1]) let (e = xs_xc + sx * xs_len / 2, o = sx * col_ovh)
+                translate([0, col_y1, 0]) rotate([90, 0, 0]) linear_extrude(col_t)
+                    polygon([[e - sx * 0.01, xs_top - col_ovh - 0.01], [e - sx * 0.01, xs_top + 0.01],
+                             [e + o, xs_top + 0.01]]);
         }
         translate([x0 - 1, 0, stage_base_h]) dovetail_slot(xs_len + 2);
         // X adjust: screw enters +X face, nut dropped in from the top

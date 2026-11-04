@@ -87,8 +87,9 @@ module pinion(teeth = pinion_teeth, mod = gear_mod, thick = gear_thick) {
             for (i = [0:teeth - 1]) rotate(i * 360 / teeth) polygon(_tooth(teeth, mod, gear_pa));
         }
         translate([0, 0, -0.01]) cylinder(d = horn_d + 0.4, h = horn_t + 0.2);
-        screw_hole(3.5, thick);                                     // horn centre screw
-        translate([0, 0, horn_t + 2]) cylinder(d = 7, h = thick);   // its head + driver
+        // horn centre screw: through-bore for its head, so it seats on the
+        // horn hub (the stock screw is too short to pass pinion material)
+        translate([0, 0, -0.01]) cylinder(d = 7, h = thick + 0.02);
         for (i = [0:horn_hole_n - 1]) rotate(i * 360 / horn_hole_n)
             translate([horn_hole_r, 0, 0]) {
                 screw_hole(horn_hole_d + 0.4, thick);

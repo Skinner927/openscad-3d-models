@@ -15,3 +15,4 @@ translate([100, 0, 0]) difference() {
 }
 
 echo("CHECK", "d_hole_flat", bh_flat + bh_flat_clr);
+echo("CHECK", "d_hole_flat_gap", bh_flat_clr);
