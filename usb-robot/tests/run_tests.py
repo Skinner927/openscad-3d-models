@@ -39,6 +39,7 @@ TARGETS = [
     ("parts/plug_flexure.scad", True),
     ("parts/plug_clamp_cap.scad", True),
     ("parts/plug_flex_stop.scad", True),
+    ("parts/tower_jig.scad", True),
     ("assembly.scad", False),
 ]
 
@@ -79,6 +80,7 @@ EXPECT = {
     "dt_chamfer": (">=", 0.5, 1e-6),
     "xbase_tower_gap": (">=", 1, 1e-6),
     "xb_window_min": (">=", 15, 1e-6),
+    "jig_strip_w": (">=", 3, 1e-6),
 }
 
 # name -> (op, value, message)  failing these prints WARN, not FAIL
@@ -95,6 +97,13 @@ MUST_BE_NONEMPTY = [
     "tests/probe_plug_seat_up.scad",
     "tests/probe_plug_seat_side.scad",
     "tests/probe_plug_seat_back.scad",
+    "tests/probe_jig_tower_px.scad",
+    "tests/probe_jig_tower_nx.scad",
+    "tests/probe_jig_tower_py.scad",
+    "tests/probe_jig_tower_ny.scad",
+    "tests/probe_jig_xbase_px.scad",
+    "tests/probe_jig_xbase_nx.scad",
+    "tests/probe_jig_xbase_py.scad",
 ]
 
 MUST_BE_EMPTY = [
@@ -112,6 +121,7 @@ MUST_BE_EMPTY = [
     "tests/collide_servo_holder.scad",
     "tests/collide_plug_cradle.scad",
     "tests/probe_pinion_print.scad",
+    "tests/collide_tower_jig.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

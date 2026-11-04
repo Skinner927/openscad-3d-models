@@ -33,6 +33,17 @@ Screw everything to the plywood in this arrangement:
 - **X base:** put it in front of the towers (−Y), leaving a 6mm gap
   between its back edge and the front edge of the tower bases.
 
+**Placement jig (`tower_jig.scad`):** a flat 3mm frame that sets both
+tower bases exactly.
+1. Screw the X base down.
+2. Lay the jig on the plywood with its straight front strip against the
+   X base's back edge and its two arms around the X base's back corners.
+3. Drop the two **bare** stage bases into the pockets: normal base on the
+   left (tower A), mirrored base on the right (tower B), adjust-screw
+   tabs facing outward.
+4. Screw both bases down, lift the jig straight off, then build the
+   stages on the bases.
+
 `assembly.scad` shows the exact relative positions. Exact placement isn't
 critical: the stages and the servo end points take up the error.
 
@@ -58,6 +69,7 @@ fits a 250mm bed.
 | `plug_flexure.scad`   | 1   | back face down. PLA/PETG `flex_beam_w=1.2`, or TPU with ~2 |
 | `plug_clamp_cap.scad` | 1   | flat                                                       |
 | `plug_flex_stop.scad` | 2   | pin up                                                     |
+| `tower_jig.scad`      | 1   | flat as exported. Tower-base placement jig (see Layout)    |
 
 The mirrored stage set goes on **port tower B**, so both towers' X adjust
 screws face outward. The male stage can be either hand.
