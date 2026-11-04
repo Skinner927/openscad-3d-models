@@ -69,9 +69,12 @@ EXPECT = {
     "holder_overhang": ("<=", 5, 1e-6),
     "m4_stage_bolt_protrude": ("<=", 0, 1e-6),
     "clamp_preload": (">=", 0.3, 1e-6),
+    "clamp_lip_overlap": (">=", 0.4, 1e-6),
+    "lip_hold_y": (">=", 1.5, 1e-6),
     "clamp_x_play": ("<=", 0.15, 1e-6),
     "horn_screw_land": ("<=", 3, 1e-6),
     "brace_slit_depth_margin": (">=", 0, 1e-6),
+    "bracket_screw_room": (">=", 0.5, 1e-6),
     "pillar_above_flex": (">=", 5, 1e-6),
     "dt_chamfer": (">=", 0.5, 1e-6),
     "xbase_tower_gap": (">=", 1, 1e-6),
@@ -90,7 +93,6 @@ MUST_BE_NONEMPTY = [
     "tests/probe_port_hole_up.scad",
     "tests/probe_port_hole_down.scad",
     "tests/probe_plug_seat_up.scad",
-    "tests/probe_plug_seat_down.scad",
     "tests/probe_plug_seat_side.scad",
     "tests/probe_plug_seat_back.scad",
 ]
@@ -108,6 +110,8 @@ MUST_BE_EMPTY = [
     "tests/probe_plug_seat.scad",
     "tests/probe_xbase_lightened.scad",
     "tests/collide_servo_holder.scad",
+    "tests/collide_plug_cradle.scad",
+    "tests/probe_pinion_print.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

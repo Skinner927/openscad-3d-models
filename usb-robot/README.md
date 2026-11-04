@@ -53,7 +53,7 @@ fits a 250mm bed.
 | `x_base.scad`         | 1   | flat, about 190 × 155mm                                    |
 | `x_carriage.scad`     | 1   | slots down                                                 |
 | `y_carriage.scad`     | 1   | slot down, pillar up                                       |
-| `pinion.scad`         | 2   | horn recess down                                           |
+| `pinion.scad`         | 2   | horn recess up as exported, no supports                    |
 | `servo_holder.scad`   | 2   | ear plate on the bed, walls up (X servo + Y servo)         |
 | `plug_flexure.scad`   | 1   | back face down. PLA/PETG `flex_beam_w=1.2`, or TPU with ~2 |
 | `plug_clamp_cap.scad` | 1   | flat                                                       |
@@ -72,11 +72,11 @@ screws face outward. The male stage can be either hand.
 | M3×12 + M3 nut                              | 3   | X lock screw, per stage                                            |
 | M3×16 + M3 nut                              | 3   | Z lock screw, per stage (enters from the outward side)             |
 | M3×16 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                         |
-| M3×10 + M3 nut                              | 4   | Port bracket to stage                                              |
+| M3×12 + M3 nut                              | 4   | Port bracket to stage                                              |
 | M3×12 + M3 nut                              | 2   | Flexure to male stage                                              |
 | M3×12 self-tapping                          | 8   | Servo ears to holders                                              |
 | M3×16 self-tapping                          | 6   | Holders to X base / X carriage, from underneath                    |
-| M3×10 (self-tapping)                        | 2   | Clamp cap to cradle                                                |
+| M3×12 (self-tapping)                        | 2   | Clamp cap to cradle                                                |
 | M3×16 + M3 nut                              | 2   | Stop straps, through the flexure top bar                           |
 | M4×12 + M4 nut                              | 4   | Male stage base to Y carriage (longer bolts scrape the X carriage) |
 | #8 / M4 wood screw, ~20mm                   | 13  | 2 tower bases (4 each) + X base (5)                                |
@@ -114,8 +114,10 @@ screw.
      shaft-side face to the pinion's horn face) and reprint the holder
      part.
 4. **Plug:**
-   1. Set the plug block in the cradle with the cable going up, and screw
-      the clamp cap on. The cradle is built for a plug whose bend turns
+   1. Push the plug up into the cradle from below, cable first, so the
+      strain relief comes up through the hole in the top lips. Seat the
+      block against the lips (that sets its height), then screw the clamp
+      cap on. The cradle is built for a plug whose bend turns
       toward the 11mm side (`plug_rot = 90`). For one that turns toward
       the 6mm side, set `plug_rot = 0` in `common.scad` and reprint.
    2. Fit the two stop straps, one in front of the flexure top bar and one

@@ -66,7 +66,7 @@ module stage_z_slider() {
         // payload holes + nut slots from the bottom
         for (p = payload_pts) {
             translate([xs_xc + p[0], payload_face_y + 0.01, stage_payload_z + p[1]])
-                rotate([90, 0, 0]) screw_hole(m3_d, 7.5);
+                rotate([90, 0, 0]) screw_hole(m3_d, payload_hole_depth);
             translate([xs_xc + p[0] - (m3_nut_af + clr) / 2, payload_face_y - 4 - (m3_nut_t + 0.4) / 2, zs_z0 - 1])
                 cube([m3_nut_af + clr, m3_nut_t + 0.4, zs_h / 2 + 1 + 3.3]);
         }
@@ -127,4 +127,6 @@ _ztip = stage_top_z - z_adj_len;
 echo("CHECK", "z_adj_engage", (_znut - stage_travel - (m3_nut_t + 0.4) / 2) - _ztip);
 echo("CHECK", "z_adj_hole", _ztip - (zs_z0 + zs_h + stage_travel - zs_adj_hole));
 echo("CHECK", "z_lock_pocket_w", zl_pocket_w);
+// port bracket M3x12 tip (through the 4 mm plate) must not bottom out
+echo("CHECK", "bracket_screw_room", payload_hole_depth - (bracket_screw_len - plate_t));
 echo("CHECK", "stage_travel_z", 2 * min(stage_gap_z, cap_gap - locknut_t));
