@@ -37,6 +37,11 @@ module up_arrow_cut() {
         polygon([[-1.5, -7], [1.5, -7], [1.5, 1], [4.5, 1], [0, 7], [-4.5, 1], [-1.5, 1]]);
 }
 
+// X lock screws: height above the base top (onto the rail flank), and the
+// back nut's Y (the front one mirrors it).
+xs_lock_z = 3; // nuts rest flat on the base 0.25 below the axis and lift onto it
+xs_back_nut_y = -9;
+xs_front_nut_rest = (m3_nut_af - 0.2) / 2; // front nut sits flat-down too
 // Upper stack shares the x-slider's X offset.
 col_ovh = (col_w - xs_len) / 2;   // column overhang past the block, per X side
 module stage_x_slider() {
@@ -59,11 +64,19 @@ module stage_x_slider() {
             screw_hole(m3_d, xs_adj_hole);
         translate([x0 + xs_len - 6 - m3_nut_t / 2, -(m3_nut_af + clr) / 2, stage_base_h + xs_screw_z - 3.5])
             cube([m3_nut_t + 0.4, m3_nut_af + clr, xs_h]);
-        // X lock: horizontal from +Y face onto rail flank, nut from top
-        translate([xs_xc + 8, xs_w / 2 + 0.01, stage_base_h + 2.5]) rotate([90, 0, 0])
+        // X lock (male stage): horizontal from the +Y face onto the rail
+        // flank, nut dropped in from the top, flats down
+        translate([xs_xc + 8, xs_w / 2 + 0.01, stage_base_h + xs_lock_z]) rotate([90, 0, 0])
             screw_hole(m3_d, xs_w / 2 - 3);
-        translate([xs_xc + 8 - (m3_nut_af + clr) / 2, 9 - (m3_nut_t + 0.4) / 2, stage_base_h + 2.5 - 3.3])
-            cube([m3_nut_af + clr, m3_nut_t + 0.4, xs_h]);
+        translate([xs_xc + 8 - (m3_nut_af + clr) / 2 / cos(30), -xs_back_nut_y - (m3_nut_t + 0.4) / 2, stage_base_h - 0.01])
+            cube([(m3_nut_af + clr) / cos(30), m3_nut_t + 0.4, xs_h]);
+        // X lock (towers): centred on the -Y (back) face, which faces away
+        // from the X axis. The column covers the top, so the nut slides in
+        // along X from the -X end face, flats up.
+        translate([xs_xc, -xs_w / 2 - 0.01, stage_base_h + xs_lock_z]) rotate([-90, 0, 0])
+            screw_hole(m3_d, xs_w / 2 - 3);
+        translate([x0 - 1, xs_back_nut_y - (m3_nut_t + 0.4) / 2, stage_base_h + xs_lock_z - (m3_nut_af + clr) / 2])
+            cube([xs_xc - x0 + 1 + (m3_nut_af + clr) / 2 / cos(30), m3_nut_t + 0.4, m3_nut_af + clr]);
         // recessed up-arrow on the Z rail's front face (matches the z-slider's)
         translate([xs_xc, col_y1 + dt_h, xs_top + col_h / 2]) up_arrow_cut();
         // cap screws (tapped into column top)
@@ -145,6 +158,11 @@ _ztip = stage_top_z - z_adj_len;
 echo("CHECK", "z_adj_engage", (_znut - stage_travel - (m3_nut_t + 0.4) / 2) - _ztip);
 echo("CHECK", "z_adj_hole", _ztip - (zs_z0 + zs_h + stage_travel - zs_adj_hole));
 echo("CHECK", "z_lock_pocket_w", zl_pocket_w);
+// X lock nuts rest on the stage base (pockets open underneath). Screw axis
+// minus the resting nut centre: the nut can lift a little but never drop.
+// Real nut is 0.2 under m3_nut_af. Worst of the two pockets.
+echo("CHECK", "xs_lock_nut_lift", min(xs_lock_z - xs_front_nut_rest, xs_lock_z - (m3_nut_af - 0.2) / 2));
+echo("CHECK", "xs_lock_nut_lift_max", max(xs_lock_z - xs_front_nut_rest, xs_lock_z - (m3_nut_af - 0.2) / 2));
 // port bracket M3x12 tip (through the 4 mm plate) must not bottom out
 echo("CHECK", "bracket_screw_room", payload_hole_depth - (bracket_screw_len - plate_t));
 // cap screw: thread into the column's 10 mm tapped hole

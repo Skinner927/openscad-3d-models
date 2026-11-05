@@ -41,6 +41,7 @@ module x_base() {
             translate([x_rail_x0, x_rail_y[1], xb_t]) dovetail_rail(x_rail_len);
             translate([x_rail_x0, x_rail_y[0] - runner_w / 2, xb_t - 0.01])
                 cube([x_rail_len, runner_w, runner_h + 0.01]);
+            lead_post();
         }
         wood_screw_holes(xb_screws, xb_t, cbore = 2);
         x_holder_floor_holes();
@@ -53,9 +54,41 @@ module x_base() {
                 translate([-50, -(holder_hw - holder_side_t - 0.5), -100]) cube([100, 100, 200]);
         }
         // speed holes: the plywood gives the stiffness, so keep only a frame
-        translate([0, 0, -1]) linear_extrude(xb_t + 2) xb_windows_2d();
+        translate([0, 0, -1]) linear_extrude(height=xb_t + 2, convexity=4) xb_windows_2d();
     }
 }
+
+// Y-servo lead post at the X base's -X end, in line (Y) with the holder's
+// side tie tab. The lead loops between the two off the -X end, away from
+// both pinions. A zip tie runs through the tunnel (along Y) and over the
+// lead lying on the post top. The post stays below the holder tab so the
+// tab passes over it at the -X travel end.
+lead_post_t = 5; // X
+lead_post_w = 12; // Y
+lead_post_x = xb_x0 + lead_post_t / 2;
+lead_post_y = y_shaft_y + side_tie_x;
+y_tab_z0 = xc_top + holder_floor_up - servo_ear_top - holder_t; // Y holder tab underside
+lead_post_top = y_tab_z0 - 6;
+lead_post_tunnel_z = lead_post_top - 3 - tie_slot[1] / 2; // 3 mm bridge on top
+lead_post_gusset_l = 10; // Y reach at the base, each side
+lead_post_gusset_top = lead_post_tunnel_z - tie_slot[1] / 2 - 3; // stays clear of the tie
+module lead_post() {
+    difference() {
+        union() {
+            translate([xb_x0, lead_post_y - lead_post_w / 2, xb_t - 0.01]) cube([lead_post_t, lead_post_w, lead_post_top - xb_t + 0.01]);
+            // triangular gussets on both Y sides, full post thickness
+            for (sy = [-1, 1])
+                translate([xb_x0, lead_post_y, 0]) rotate([90, 0, 90]) linear_extrude(lead_post_t)
+                    polygon([[sy * (lead_post_w / 2 - 0.01), xb_t - 0.01],
+                             [sy * (lead_post_w / 2 + lead_post_gusset_l), xb_t - 0.01],
+                             [sy * (lead_post_w / 2 - 0.01), lead_post_gusset_top]]);
+        }
+        translate([lead_post_x - tie_slot[0] / 2, lead_post_y - lead_post_w, lead_post_tunnel_z - tie_slot[1] / 2])
+            cube([tie_slot[0], 2 * lead_post_w, tie_slot[1]]);
+    }
+}
+echo("CHECK", "lead_post_below_tab", y_tab_z0 - lead_post_top);
+echo("CHECK", "lead_post_gusset_gap", (lead_post_tunnel_z - tie_slot[1] / 2) - lead_post_gusset_top);
 
 // Through-cutouts in the X base. Kept: an xb_frame perimeter, a strip
 // under each rail, the servo holder footprint (+ margin), and a pad

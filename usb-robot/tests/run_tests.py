@@ -70,6 +70,8 @@ EXPECT = {
     "z_adj_engage": (">=", 0, 1e-6),
     "z_adj_hole": (">=", 0, 1e-6),
     "z_lock_pocket_w": (">=", 5.7, 1e-6),
+    "xs_lock_nut_lift": (">=", 0, 1e-6),
+    "xs_lock_nut_lift_max": ("<=", 0.4, 1e-6),
     "holder_overhang": ("<=", 5, 1e-6),
     "m4_stage_bolt_protrude": ("<=", 0, 1e-6),
     "clamp_preload": (">=", 0.3, 1e-6),
@@ -81,6 +83,9 @@ EXPECT = {
     "holder_side_screw_wall": (">=", 1.5, 1e-6),
     "holder_pinion_gap": (">=", 0.5, 1e-6),
     "y_holder_on_carriage": (">=", 2, 1e-6),
+    "lead_post_below_tab": (">=", 3, 1e-6),
+    # room under the tie tunnel for the zip tie to come out and wrap up
+    "lead_post_gusset_gap": (">=", 3, 1e-6),
     "holder_screw_engage_min": (">=", 6, 1e-6),
     "holder_screw_bottom_min": (">=", 0.5, 1e-6),
     "cap_screw_engage": (">=", 5, 1e-6),
@@ -118,6 +123,8 @@ MUST_BE_NONEMPTY = [
     "tests/probe_y_rack_on_bed.scad",
     "tests/probe_y_holder_side_screw.scad",
     "tests/probe_holder_tie_bridge.scad",
+    "tests/probe_holder_side_tie_bridge.scad",
+    "tests/probe_lead_post.scad",
     "tests/probe_zs_arrow_up.scad",
     "tests/probe_xs_arrow_up.scad",
     "tests/probe_xs_col_support_n.scad",
@@ -147,7 +154,11 @@ MUST_BE_EMPTY = [
     "tests/check_holder_screw_seats.scad",
     "tests/check_no_lead_cuts.scad",
     "tests/probe_xbase_pinion_hole.scad",
+    "tests/probe_xs_back_lock.scad",
+    "tests/check_lead_post_gussets.scad",
     "tests/probe_holder_tie_slots.scad",
+    "tests/probe_holder_side_tie_slots.scad",
+    "tests/probe_lead_post_tunnel.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

@@ -1,6 +1,7 @@
 // Screwdriver access: a 5 mm shaft must reach every adjust screw of both
 // towers with both bulkheads installed.
 //   Z screws: straight down onto the cap.  X screws: straight in along X.
+//   X lock: straight in from the slider's back face.
 include <../port_tower.scad>
 
 function to_world(i, p) = let(x = i == 1 ? -p[0] : p[0])
@@ -17,6 +18,10 @@ module drivers(i) {
     l = to_world(i, [xs_xc + lx, col_y1 + 2, zs_z0 + zs_h - 5]);
     lout = (i == 0 ? -1 : 1) * zl_side;
     translate(l) rotate([0, lout * 90, 0]) cylinder(d = 5, h = 120);
+    // X lock screw: on the back (stage-local -Y) face, which faces away
+    // from the X axis (world +Y)
+    b = to_world(i, [xs_xc, -xs_w / 2, stage_base_h + xs_lock_z]);
+    translate(b) rotate([-90, 0, 0]) cylinder(d = 5, h = 120);
 }
 
 intersection() {

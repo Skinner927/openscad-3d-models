@@ -82,7 +82,7 @@ version: turned 180° it is its own mirror image. The male stage can be either h
 | MG995 servo (+ round horn and its screws)   | 2   | X and Y axes                                                       |
 | M3×30 + M3 nylock + M3 nut                  | 3   | X adjust screw, per stage                                          |
 | M3×30 + M3 nylock + M3 nut                  | 3   | Z adjust screw, per stage                                          |
-| M3×12 + M3 nut                              | 3   | X lock screw, per stage                                            |
+| M3×12 + M3 nut                              | 3   | X lock screw, per stage (towers: back face; male stage: front)     |
 | M3×16 + M3 nut                              | 3   | Z lock screw, per stage (enters from the outward side)             |
 | M3×12 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                         |
 | M3×12 + M3 nut                              | 4   | Port bracket to stage                                              |
@@ -93,7 +93,7 @@ version: turned 180° it is its own mirror image. The male stage can be either h
 | M3×16 + M3 nut                              | 2   | Stop straps, through the flexure top bar                           |
 | M4×12 + M4 nut                              | 4   | Male stage base to Y carriage (longer bolts scrape the X carriage) |
 | #8 / M4 wood screw, ~20mm                   | 13  | 2 tower bases (4 each) + X base (5)                                |
-| Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 6   | Cable pillar (2), servo leads (2), spares (2)                      |
+| Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 7   | Cable pillar (2), X servo lead (1), Y servo lead (2), spares (2)   |
 
 The nuts sit in printed nut traps. Push each nut in before inserting its
 screw.
@@ -101,7 +101,12 @@ screw.
 ## Assembly notes
 
 1. **Port towers:**
-   1. Slide the x-slider onto the base rail.
+   1. Slide an M3 nut, flats down, into the slot in the x-slider's −X end
+      until it lines up with the hole in the middle of the back face. Then
+      slide the x-slider onto the base rail. The X lock screw goes into
+      that back hole; the hole on the front face (toward the X axis) is
+      for the male stage, which uses it instead because its back faces
+      the cable pillar.
    2. Fit the X adjust screw: it goes through the tab, then the nylock
       goes on inside the tab. Snug the nylock so the screw turns freely
       without end play, then thread the screw into the slider's captive
@@ -175,9 +180,17 @@ at the front (+Y, shaft) end, toward the racks. Tie it back:
    two slots.
 3. Run one zip tie down one slot, up the other and around the lead.
 
-- **X servo:** it doesn't move. Run the lead on to the controller.
-- **Y servo:** it rides on the X carriage. Leave a 100mm service loop
-  after the tab so the lead can follow the 70mm X stroke.
+- **X servo:** it doesn't move. Use the tab at the rear of its holder,
+  then run the lead on to the controller.
+- **Y servo:** it rides on the X carriage, so its lead goes off the −X
+  end instead, away from both pinions:
+  1. Run the lead down the servo's −X side and tie it to the tab on the
+     holder's side wall (same two-slot tie as above).
+  2. Tie it again to the post at the X base's −X end: one zip tie
+     through the tunnel under the post top, over the lead.
+  3. Leave about 90mm of lead between the two ties. At the −X end of
+     travel the slack hangs off the end of the base; at the +X end it
+     pulls straight.
 
 ## Tests
 

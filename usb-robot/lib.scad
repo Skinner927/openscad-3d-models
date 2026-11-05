@@ -201,6 +201,10 @@ tie_tab_l = 8; // beyond the plate end (x)
 tie_tab_w = 20; // across (y)
 tie_slot_y = 5; // slot centres at +/- this
 tie_slot = [3.6, 3]; // fits a <= 3 wide x <= 2.5 thick zip tie
+// Second tab, same size, off the side wall's outer face (world -X) near
+// the shaft end where the lead leaves the case: the Y servo's lead is tied
+// here and loops off the carriage's -X end to the post on the X base.
+side_tie_x = 8; // tab centre along the wall (upright x)
 module mg995_holder(floor_up = holder_floor_up) {
   hw = servo_body[1] / 2 + 6;
   difference() {
@@ -211,10 +215,15 @@ module mg995_holder(floor_up = holder_floor_up) {
         cube([holder_side_x1 - holder_px0, holder_side_t, floor_up - servo_ear_top]);
       translate([holder_px0 - tie_tab_l, -tie_tab_w / 2, servo_ear_top])
         cube([tie_tab_l + 0.01, tie_tab_w, holder_t]);
+      translate([side_tie_x - tie_tab_w / 2, -holder_hw - tie_tab_l, servo_ear_top])
+        cube([tie_tab_w, tie_tab_l + 0.01, holder_t]);
     }
     for (sy = [-1, 1])
       translate([holder_px0 - tie_tab_l / 2 - tie_slot[0] / 2, sy * tie_slot_y - tie_slot[1] / 2, servo_ear_top - 1])
         cube([tie_slot[0], tie_slot[1], holder_t + 2]);
+    for (sx = [-1, 1])
+      translate([side_tie_x + sx * tie_slot_y - tie_slot[1] / 2, -holder_hw - tie_tab_l / 2 - tie_slot[0] / 2, servo_ear_top - 1])
+        cube([tie_slot[1], tie_slot[0], holder_t + 2]);
     translate([servo_shaft_off - servo_body[0] - clr - 0.2, -servo_body[1] / 2 - clr, -1])
       cube([servo_body[0] + 2 * clr + 0.2, servo_body[1] + 2 * clr, servo_body[2] + 1 + clr]);
     cylinder(d=14, h=floor_up + 1);
