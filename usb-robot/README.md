@@ -84,16 +84,16 @@ version: turned 180° it is its own mirror image. The male stage can be either h
 | M3×30 + M3 nylock + M3 nut                  | 3   | Z adjust screw, per stage                                          |
 | M3×12 + M3 nut                              | 3   | X lock screw, per stage                                            |
 | M3×16 + M3 nut                              | 3   | Z lock screw, per stage (enters from the outward side)             |
-| M3×16 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                         |
+| M3×12 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                         |
 | M3×12 + M3 nut                              | 4   | Port bracket to stage                                              |
 | M3×12 + M3 nut                              | 2   | Flexure to male stage                                              |
 | M3×12 self-tapping                          | 8   | Servo ears to holders                                              |
-| M3×16 self-tapping                          | 6   | Holders to X base / X carriage, from underneath                    |
+| M3×12 self-tapping                          | 6   | Holders to X base / X carriage, from underneath                    |
 | M3×12 (self-tapping)                        | 2   | Clamp cap to cradle                                                |
 | M3×16 + M3 nut                              | 2   | Stop straps, through the flexure top bar                           |
 | M4×12 + M4 nut                              | 4   | Male stage base to Y carriage (longer bolts scrape the X carriage) |
 | #8 / M4 wood screw, ~20mm                   | 13  | 2 tower bases (4 each) + X base (5)                                |
-| Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 8   | Cable pillar (2), X servo lead (2), Y servo lead (2), spares (2)   |
+| Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 6   | Cable pillar (2), servo leads (2), spares (2)                      |
 
 The nuts sit in printed nut traps. Push each nut in before inserting its
 screw.
@@ -119,8 +119,9 @@ screw.
 3. **Servos:** both mount **upside down** (shaft pointing down) in the
    two identical printed holders. The ears rest on the holder plate and
    take M3 self-tappers.
-   - Each holder screws to the X base or X carriage with 3× M3×16
-     self-tappers driven up from underneath.
+   - Each holder screws to the X base or X carriage with 3× M3×12
+     self-tappers driven up from underneath (counterbored so the same
+     length fits both).
    - The holder's long side wall goes on the side away from the rack.
    - The horn screws pass through counterbores in the pinion, leaving
      2.5mm of material to clamp.
@@ -166,12 +167,17 @@ screw.
 
 ## Servo wire routing
 
-- **X servo:** its lead leaves through the notch at the X base's rear
-  edge. Zip-tie it through the two slots next to the notch.
-- **Y servo:** it rides on the X carriage. Run its lead down through the
-  pass-through slot behind the servo, zip-tie it at the slots on the
-  carriage's left (−X) end, and leave a 100mm service loop to the rear
-  exit so it can follow the 70mm X stroke.
+Both servos hang upside down, so each lead leaves the top of the case
+at the front (+Y, shaft) end, toward the racks. Tie it back:
+
+1. Bend the lead back over the top of the servo and down its rear end.
+2. Lay it on the tab at the rear of the holder's ear plate, between the
+   two slots.
+3. Run one zip tie down one slot, up the other and around the lead.
+
+- **X servo:** it doesn't move. Run the lead on to the controller.
+- **Y servo:** it rides on the X carriage. Leave a 100mm service loop
+  after the tab so the lead can follow the 70mm X stroke.
 
 ## Tests
 

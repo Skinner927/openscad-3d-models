@@ -45,10 +45,13 @@ module x_base() {
         wood_screw_holes(xb_screws, xb_t, cbore = 2);
         x_holder_floor_holes();
         // pinion clearance pocket (keeps the plate clear of the gear)
-        translate([x_shaft_x, x_shaft_y, xb_t - 1]) cylinder(r = pinion_pd / 2 + gear_mod + 1, h = 2);
-        // servo-lead exit notch at the rear edge, plus zip-tie slots
-        translate([x_shaft_x - 6, xb_y0 - 1, -1]) cube([12, 8, xb_t + 2]);
-        for (dx = [-10, 10]) translate([x_shaft_x + dx - 1.5, xb_y0 + 12, -1]) cube([3, 5, xb_t + 2]);
+        // stops 0.5 short of the holder side wall so it never undercuts
+        // the wall or its floor screw
+        intersection() {
+            translate([x_shaft_x, x_shaft_y, xb_t - 1]) cylinder(r = pinion_pd / 2 + gear_mod + 1, h = 2);
+            at_inverted_servo(x_shaft_x, x_shaft_y, x_pinion_z0, 90)
+                translate([-50, -(holder_hw - holder_side_t - 0.5), -100]) cube([100, 100, 200]);
+        }
         // speed holes: the plywood gives the stiffness, so keep only a frame
         translate([0, 0, -1]) linear_extrude(xb_t + 2) xb_windows_2d();
     }
@@ -110,9 +113,6 @@ module x_carriage() {
             cube([xc_len + 2, runner_w + 2 * clr + 0.3, runner_h + clr + 1]);
         translate([xc_x0 - 1, x_rail_y[0], xc_z0]) rotate([90, 0, 90]) linear_extrude(xc_len + 2)
             chamfer_mouth(runner_w + 2 * clr + 0.3);
-        // lightening / Y-servo lead pass-through + zip-tie slots
-        translate([y_shaft_x_rel - 6, xc_y0 + 3, xc_top - 4]) cube([12, 6, 5]);
-        for (dy = [12, 24]) translate([xc_x0 + 3, xc_y0 + dy, xc_z0 + runner_h + 2]) cube([5, 3, xc_h]);
     }
 }
 module x_carriage_world(x_pos) { translate([x_pos, 0, 0]) x_carriage(); }
@@ -122,6 +122,11 @@ module y_pinion_world(x_pos) {
 }
 
 echo("CHECK", "x_rail_len", x_rail_len);
+// holder floor screws: thread into the holder's 12 mm tapped hole, both floors
+echo("CHECK", "holder_screw_engage_min", min([for (t = [xb_t, xc_h]) holder_screw_len - holder_floor_land(t)]));
+echo("CHECK", "holder_screw_bottom_min", min([for (t = [xb_t, xc_h]) 12 - (holder_screw_len - holder_floor_land(t))]));
+// Y holder's outer side-wall face must sit over the carriage (-X end)
+echo("CHECK", "y_holder_on_carriage", (y_shaft_x_rel - holder_hw) - xc_x0);
 // X base front edge to the port towers' base front edge (Y)
 echo("CHECK", "xbase_tower_gap", (tower_y - stage_D / 2) - xb_y1);
 echo("CHECK", "x_mesh_gap", (x_pitch_y - x_shaft_y) - pinion_pd / 2);

@@ -78,6 +78,13 @@ EXPECT = {
     "clamp_x_play": ("<=", 0.15, 1e-6),
     "horn_screw_land": ("<=", 3, 1e-6),
     "brace_slit_depth_margin": (">=", 0, 1e-6),
+    "holder_side_screw_wall": (">=", 1.5, 1e-6),
+    "holder_pinion_gap": (">=", 0.5, 1e-6),
+    "y_holder_on_carriage": (">=", 2, 1e-6),
+    "holder_screw_engage_min": (">=", 6, 1e-6),
+    "holder_screw_bottom_min": (">=", 0.5, 1e-6),
+    "cap_screw_engage": (">=", 5, 1e-6),
+    "cap_screw_bottom": (">=", 0.5, 1e-6),
     "bracket_screw_room": (">=", 0.5, 1e-6),
     "pillar_above_flex": (">=", 5, 1e-6),
     "dt_chamfer": (">=", 0.5, 1e-6),
@@ -109,6 +116,8 @@ MUST_BE_NONEMPTY = [
     "tests/probe_jig_xbase_py.scad",
     "tests/probe_x_rack_on_bed.scad",
     "tests/probe_y_rack_on_bed.scad",
+    "tests/probe_y_holder_side_screw.scad",
+    "tests/probe_holder_tie_bridge.scad",
     "tests/probe_zs_arrow_up.scad",
     "tests/probe_xs_arrow_up.scad",
     "tests/probe_xs_col_support_n.scad",
@@ -135,6 +144,9 @@ MUST_BE_EMPTY = [
     "tests/probe_xs_arrow.scad",
     "tests/collide_tower_jig.scad",
     "tests/check_stage_base_symmetric.scad",
+    "tests/check_holder_screw_seats.scad",
+    "tests/check_no_lead_cuts.scad",
+    "tests/probe_holder_tie_slots.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

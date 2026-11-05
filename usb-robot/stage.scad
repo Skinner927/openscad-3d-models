@@ -147,4 +147,7 @@ echo("CHECK", "z_adj_hole", _ztip - (zs_z0 + zs_h + stage_travel - zs_adj_hole))
 echo("CHECK", "z_lock_pocket_w", zl_pocket_w);
 // port bracket M3x12 tip (through the 4 mm plate) must not bottom out
 echo("CHECK", "bracket_screw_room", payload_hole_depth - (bracket_screw_len - plate_t));
+// cap screw: thread into the column's 10 mm tapped hole
+echo("CHECK", "cap_screw_engage", cap_screw_len - cap_t);
+echo("CHECK", "cap_screw_bottom", 10 - (cap_screw_len - cap_t));
 echo("CHECK", "stage_travel_z", 2 * min(stage_gap_z, cap_gap - locknut_t));

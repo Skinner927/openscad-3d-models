@@ -118,6 +118,8 @@ zs_screw_y = col_y1 + 3; // Z adjust screw Y (clear of payload nut slots)
 zs_screw_x = -12; // Z adjust screw X offset: keeps it clear of the bulkhead body
 payload_hole_depth = 9.5; // M3 holes into the z-slider payload face
 bracket_screw_len = 12; // port bracket -> z-slider screw (README BOM)
+holder_screw_len = 12; // holder -> X base / X carriage, self-tapping from below
+cap_screw_len = 12; // z-cap -> column, self-tapping
 zs_arrow_depth = 0.4; // up-arrows recessed in the z-slider payload face and the Z rail
 
 /* [World layout] */
@@ -179,7 +181,7 @@ yc_y1 = stage_D / 2;
 yc_len = yc_y1 - yc_y0;
 
 // X carriage footprint relative to plug X (x) and world Y (y)
-xc_x0 = yc_x0 - xs_xc - 42; // room for the Y servo on -X side
+xc_x0 = yc_x0 - xs_xc - 61; // room for the Y servo + holder side wall on -X side
 xc_x1 = yc_x1 - xs_xc + 2;
 xc_y0 = ms_y_in - y_travel + yc_y0; // world Y, rear
 xc_y1 = ms_y_in + yc_y1; // world Y, front
