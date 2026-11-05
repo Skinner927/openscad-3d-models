@@ -44,11 +44,11 @@ module x_base() {
         }
         wood_screw_holes(xb_screws, xb_t, cbore = 2);
         x_holder_floor_holes();
-        // pinion clearance pocket (keeps the plate clear of the gear)
-        // stops 0.5 short of the holder side wall so it never undercuts
-        // the wall or its floor screw
+        // pinion clearance + speed hole, through the plate; stops 0.5 short
+        // of the holder side wall so it never undercuts the wall or its
+        // floor screw
         intersection() {
-            translate([x_shaft_x, x_shaft_y, xb_t - 1]) cylinder(r = pinion_pd / 2 + gear_mod + 1, h = 2);
+            translate([x_shaft_x, x_shaft_y, -1]) cylinder(r = pinion_pd / 2 + gear_mod + 1, h = xb_t + 2);
             at_inverted_servo(x_shaft_x, x_shaft_y, x_pinion_z0, 90)
                 translate([-50, -(holder_hw - holder_side_t - 0.5), -100]) cube([100, 100, 200]);
         }
