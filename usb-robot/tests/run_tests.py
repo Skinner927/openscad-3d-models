@@ -108,6 +108,9 @@ WARNS = {
 
 # geometric probes that must hit something (the two-sided half of a fit test)
 MUST_BE_NONEMPTY = [
+    "tests/probe_xs_adjust_nut_locked.scad",
+    "tests/probe_zs_adjust_nut_locked.scad",
+    "tests/probe_zs_payload_nut_locked.scad",
     "tests/probe_zs_lock_nut_locked.scad",
     "tests/probe_xs_back_lock_solid.scad",
     "tests/probe_xs_back_nut_locked.scad",
@@ -167,6 +170,7 @@ MUST_BE_EMPTY = [
     "tests/probe_lock_nut_fit.scad",
     "tests/check_stage_x_slider_symmetric.scad",
     "tests/check_yc_integrated_stage_base.scad",
+    "tests/probe_adjust_nut_fit.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

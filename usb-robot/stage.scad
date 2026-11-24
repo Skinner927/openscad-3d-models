@@ -67,8 +67,8 @@ module stage_x_slider() {
         translate([x0 + xs_len + 0.01, 0, stage_base_h + xs_screw_z]) rotate([0, -90, 0])
             screw_hole(m3_d, xs_adj_hole);
         for (sx = [-1, 1])
-            translate([xs_xc + sx * (xs_len / 2 - 6) - (m3_nut_t + 0.4) / 2, -(m3_nut_af + clr) / 2, stage_base_h + xs_screw_z - 3.5])
-                cube([m3_nut_t + 0.4, m3_nut_af + clr, xs_h]);
+            translate([xs_xc + sx * (xs_len / 2 - 6) - (m3_nut_t + 0.4) / 2, -m3_slot_w / 2, stage_base_h + xs_screw_z - 3.5])
+                cube([m3_nut_t + 0.4, m3_slot_w, xs_h]);
         // X lock (male stage): horizontal from the +Y face onto the rail
         // flank, nut dropped in from the top, corner down. The pocket is
         // across-flats wide so the nut cannot spin.
@@ -105,16 +105,18 @@ module stage_z_slider() {
         for (p = payload_pts) {
             translate([xs_xc + p[0], payload_face_y + 0.01, stage_payload_z + p[1]])
                 rotate([90, 0, 0]) screw_hole(m3_d, payload_hole_depth);
-            translate([xs_xc + p[0] - (m3_nut_af + clr) / 2, payload_face_y - 4 - (m3_nut_t + 0.4) / 2, zs_z0 - 1])
-                cube([m3_nut_af + clr, m3_nut_t + 0.4, zs_h / 2 + 1 + 3.3]);
+            translate([xs_xc + p[0] - m3_slot_w / 2, payload_face_y - 4 - (m3_nut_t + 0.4) / 2, zs_z0 - 1])
+                cube([m3_slot_w, m3_nut_t + 0.4, zs_h / 2 + 1 + 3.3]);
         }
         // recessed up-arrow on the payload face: shows which way is up when
         // mounting the port bracket / flexure
         translate([xs_xc, payload_face_y, stage_payload_z]) up_arrow_cut();
         // Z adjust: through hole, nut slot from the -X side 5 below the top
         translate([xs_xc + zs_screw_x, zs_screw_y, zs_z0 + zs_h - zs_adj_hole]) screw_hole(m3_d, zs_adj_hole + 0.1);
-        translate([x0 - 1, zs_screw_y - (m3_nut_af + clr) / 2, zs_z0 + zs_h - 5 - (m3_nut_t + 0.4) / 2])
-            cube([zs_screw_x + zs_w / 2 + 1 + (m3_nut_af + clr) / 2, m3_nut_af + clr, m3_nut_t + 0.4]);
+        // slot runs past the screw by half the nut's corner width so a
+        // corner-first nut can centre on it
+        translate([x0 - 1, zs_screw_y - m3_slot_w / 2, zs_z0 + zs_h - 5 - (m3_nut_t + 0.4) / 2])
+            cube([zs_screw_x + zs_w / 2 + 1 + m3_slot_w / 2 / cos(30), m3_slot_w, m3_nut_t + 0.4]);
         // Z lock: from the +X (outward) side onto the rail flank, nut dropped in from the top
         lz = zs_z0 + zs_h - 5;
         x1 = x0 + zs_w;

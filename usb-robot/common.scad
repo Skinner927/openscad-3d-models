@@ -94,6 +94,7 @@ locknut_t = 4; // M3 nylock thickness
 lock_nut_t = 4; // lock-screw nuts (X and Z lock): pockets sized for 4 mm thick nuts
 lock_nut_af = 5.4; // measured across flats (nylock and plain M3)
 lock_pocket_w = lock_nut_af + 0.2; // tight across-flats pocket: nut turns ~4 deg then jams
+m3_slot_w = lock_pocket_w; // same tight width for plain M3 nut slots (payload + adjust nuts)
 x_adj_len = 30; // X adjust screw length (README BOM)
 z_adj_len = 30; // Z adjust screw length (README BOM)
 xs_adj_hole = xs_len; // X adjust hole: through the x-slider
