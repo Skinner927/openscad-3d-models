@@ -87,7 +87,7 @@ needs no bolts. It uses the normal (unmirrored) z-slider and cap.
 | M3×30 + M3 nylock + M3 nut                  | 3   | X adjust screw, per stage                                          |
 | M3×30 + M3 nylock + M3 nut                  | 3   | Z adjust screw, per stage                                          |
 | M3×12 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | X lock screw, per stage (towers: back face; male stage: front)     |
-| M3×16 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | Z lock screw, per stage (enters from the outward side)             |
+| M3×12 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | Z lock screw, per stage (outward side, head in a counterbore)      |
 | M3×12 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                         |
 | M3×12 + M3 nut                              | 4   | Port bracket to stage                                              |
 | M3×12 + M3 nut                              | 2   | Flexure to male stage                                              |

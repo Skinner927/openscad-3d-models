@@ -45,6 +45,10 @@ xs_back_nut_y = -9.5;
 // Z lock screw Y: as far toward the payload face as the rail flank allows,
 // so its nut stays inside the z-slider (the back face slides on the column)
 zl_screw_y = col_y1 + 3;
+zl_screw_len = 12; // M3x12, same as the X lock
+zl_cbore = 3.4; // head counterbore depth in the z-slider side face (lets M3x12 reach)
+zl_nut_wall = 1.6; // counterbore floor (or face) to the nut pocket: takes the lock force
+zl_nut_out = zl_cbore + zl_nut_wall; // side face to the nut pocket's outer face
 xs_front_lock_dx = 8; // front (male stage) lock holes, each side of centre
 xs_front_nut_rest = lock_nut_af / 2 / cos(30); // lock nuts sit corner-down
 // Upper stack shares the x-slider's X offset.
@@ -124,7 +128,9 @@ module stage_z_slider() {
         lz = zs_z0 + zs_h - 5;
         x1 = x0 + zs_w;
         translate([x1 + 0.01, zl_screw_y, lz]) rotate([0, -90, 0]) screw_hole(m3_d, zs_w / 2 - 4);
-        translate([x1 - 2.5 - (lock_nut_t + 0.4), zl_screw_y - zl_pocket_w / 2, lz - zl_pocket_w / 2 / cos(30)])
+        // head counterbore so an M3x12 reaches the flank
+        translate([x1 + 0.01, zl_screw_y, lz]) rotate([0, -90, 0]) cylinder(d = m3_head_d, h = zl_cbore + 0.01, $fn = 32);
+        translate([x1 - zl_nut_out - (lock_nut_t + 0.4), zl_screw_y - zl_pocket_w / 2, lz - zl_pocket_w / 2 / cos(30)])
             cube([lock_nut_t + 0.4, zl_pocket_w, zs_h]);
     }
 }
@@ -179,6 +185,13 @@ echo("CHECK", "z_lock_pocket_w", zl_pocket_w);
 echo("CHECK", "z_lock_nut_inside", (zl_screw_y - lock_nut_af / 2) - col_y1);
 // screw axis must stay below the rail's wide top edge to bear on the flank
 echo("CHECK", "z_lock_on_flank", (col_y1 + dt_h) - zl_screw_y);
+// Z lock reach: head seat (counterbore floor) to the rail flank at the
+// screw's height off the column face; spare = screw length past contact
+_zl_flank = dt_neck / 2 + (zl_screw_y - col_y1) / tan(dt_angle);
+echo("CHECK", "z_lock_spare", zl_screw_len - ((zs_w / 2 - zl_cbore) - _zl_flank));
+echo("CHECK", "z_lock_nut_wall", zl_nut_wall);
+// nut pocket inner face to the dovetail slot's widest point
+echo("CHECK", "z_lock_pocket_to_slot", (zs_w / 2 - zl_nut_out - (lock_nut_t + 0.4)) - (dt_w / 2 + clr));
 // X lock nuts (front and back) rest corner-down on the stage base (pockets
 // open underneath). Screw axis minus the resting nut centre: the nut can
 // lift a little but never drop.
