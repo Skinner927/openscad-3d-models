@@ -49,60 +49,61 @@ critical: the stages and the servo end points take up the error.
 
 ## Print list
 
-Ready-made STLs are in `stl/`, with `*_mirrored.stl` for tower B (stage base, x-slider and cap excepted: one part serves both sides). Re-export them after changing any parameter in `common.scad` by running `./export_stls.sh` (about 30 seconds).
+RUn `./export_stls.sh` to generate the STLs to print in `stl/`.
 
-Use PLA or PETG with 3–4 walls and 30% infill unless noted. Every part
-fits a 250mm bed.
+Use PLA or PETG with 3–4 walls and 30% infill unless noted.
+Use `Inner/Outer/Inner` for "Walls printing order" if your slicer has the
+setting.
 
-| File (`parts/`)       | Qty | Orientation / notes                                        |
-| --------------------- | --- | ---------------------------------------------------------- |
-| `stage_base.scad`     | 2   | as modelled. Same part for both towers (turn it around)    |
-| `stage_x_slider.scad` | 3   | upright, slot down (bridges). Same part for every stage    |
-| `stage_z_slider.scad` | 3   | lying on payload face. 1 mirrored                          |
-| `stage_z_cap.scad`    | 3   | flat. Same part for every stage (flip it for tower B)      |
-| `port_bracket.scad`   | 2   | flat back face down, ribs up                               |
-| `x_base.scad`         | 1   | flat, about 190 × 155mm                                    |
-| `x_carriage.scad`     | 1   | slots down                                                 |
-| `y_carriage.scad`     | 1   | slot down, pillar up. Male stage base/rail built in        |
-| `pinion.scad`         | 2   | horn recess up as exported, no supports                    |
-| `servo_holder.scad`   | 2   | ear plate on the bed, walls up (X servo + Y servo)         |
-| `plug_flexure.scad`   | 1   | back face down. PLA/PETG `flex_beam_w=1.2`, or TPU with ~2 |
-| `plug_clamp_cap.scad` | 1   | flat                                                       |
-| `plug_flex_stop.scad` | 2   | pin up                                                     |
-| `tower_jig.scad`      | 1   | flat as exported. Tower-base placement jig (see Layout)    |
-
-The mirrored z-slider goes on **port tower B**, so both towers' Z adjust
-screws sit outward. Tower B's cap is the normal cap turned upside down,
-which moves its Z adjust hole to the other side. The stage base needs no mirrored version:
-turned 180° it is its own mirror image. The x-slider is symmetric, with
-an X adjust nut slot at each end. The male stage has no separate base:
-its plate, rail and X adjust tab are built into the Y carriage, so it
-needs no bolts. It uses the normal (unmirrored) z-slider and cap.
+| File (`stl/`)                 | Qty | Orientation / notes                                                   |
+| ----------------------------- | --- | --------------------------------------------------------------------- |
+| `pinion.stl`                  | 2   | horn recess up as exported, no supports                               |
+| `plug_clamp_cap.stl`          | 1   | flat                                                                  |
+| `plug_flex_stop.stl`          | 2   | pin up                                                                |
+| `plug_flexure.stl`            | 1   | back face down. PLA/PETG `flex_beam_w=1.2`, or TPU (untested) with ~2 |
+| `port_bracket.stl`            | 2   | flat back face down, ribs up                                          |
+| `servo_holder.stl`            | 2   | ear plate on the bed, walls up (X servo + Y servo)                    |
+| `stage_base.stl`              | 2   | as modelled. Same part for both towers (turn it around)               |
+| `stage_x_slider.stl`          | 3   | upright, slot down (bridges). Same part for every stage               |
+| `stage_z_cap.stl`             | 3   | flat. Same part for every stage (flip it for tower B)                 |
+| `stage_z_slider.stl`          | 2   | lying on payload face.                                                |
+| `stage_z_slider_mirrored.stl` | 1   | lying on payload face. For tower B.                                   |
+| `x_base.stl`                  | 1   | flat, about 190 × 155mm                                               |
+| `x_carriage.stl`              | 1   | slots down                                                            |
+| `y_carriage.stl`              | 1   | slot down, pillar up. Male stage base/rail built in                   |
+| `tower_jig.stl`               | 1   | flat as exported. Tower-base placement jig (see Layout)               |
 
 ## Hardware
 
-| Item                                        | Qty | Where                                                              |
-| ------------------------------------------- | --- | ------------------------------------------------------------------ |
-| MG995 servo (+ round horn and its screws)   | 2   | X and Y axes                                                       |
-| M3×30 + M3 nylock + M3 nut                  | 3   | X adjust screw, per stage                                          |
-| M3×30 + M3 nylock + M3 nut                  | 3   | Z adjust screw, per stage                                          |
-| M3×12 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | X lock screw, per stage (towers: back face; male stage: front)     |
-| M3×12 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | Z lock screw, per stage (outward side, head in a counterbore)      |
-| M3×12 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                         |
-| M3×12 + M3 nut                              | 4   | Port bracket to stage                                              |
-| M3×12 + M3 nut                              | 2   | Flexure to male stage                                              |
-| M3×12 self-tapping                          | 8   | Servo ears to holders                                              |
-| M3×12 self-tapping                          | 6   | Holders to X base / X carriage, from underneath                    |
-| M3×12 (self-tapping)                        | 2   | Clamp cap to cradle                                                |
-| M3×16 + M3 nut                              | 2   | Stop straps, through the flexure top bar                           |
-| #8 / M4 wood screw, ~20mm                   | 13  | 2 tower bases (4 each) + X base (5)                                |
-| Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 7   | Cable pillar (2), X servo lead (1), Y servo lead (2), spares (2)   |
-| M1.7x6 self-tapping                         | 8   | Servo spline mount to pinion gear (YMMV)                           |
+| Item                                        | Qty | Where                                                             |
+| ------------------------------------------- | --- | ----------------------------------------------------------------- |
+| MG995 servo (+ round horn and its screws)   | 2   | X and Y axes                                                      |
+| M2x6 self-tapping                           | 8   | Servo horn (spline mount) to pinion gear (YMMV, vendor dependent) |
+| M3×30 + M3 nylock + M3 nut \*               | 3   | X adjust screw, per stage                                         |
+| M3×30 + M3 nylock + M3 nut \*               | 3   | Z adjust screw, per stage                                         |
+| M3×12 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | X lock screw, per stage (towers: back face; male stage: front)    |
+| M3×12 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | Z lock screw, per stage (outward side, head in a counterbore)     |
+| M3×12 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                        |
+| M3×12 + M3 nut                              | 4   | Port bracket to stage                                             |
+| M3×12 + M3 nut                              | 2   | Flexure to male stage                                             |
+| M3×12 self-tapping                          | 8   | Servo ears to holders                                             |
+| M3×12 self-tapping                          | 6   | Holders to X base / X carriage, from underneath                   |
+| M3×12 (self-tapping)                        | 2   | Clamp cap to cradle                                               |
+| M3×16 + M3 nut \*\*                         | 2   | Stop straps, through the flexure top bar (`plug_flex_stop.stl`)   |
+| #8 / M4 wood screw, ~20mm                   | 13  | 2 tower bases (4 each) + X base (5)                               |
+| Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 7   | Cable pillar (2), X servo lead (1), Y servo lead (2), spares (2)  |
 
-**The M3×30 adjust screws are optional.** They give fine, screw-driven
+
+**\* The M3×30 adjust screws are optional.** They give fine, screw-driven
 adjustment (0.5mm per turn). Without them, loosen the lock screws, slide
 each stage into place with your fingers, and tighten the lock screws
 again. Skipping them also skips their nylocks and nuts: 6 fewer of each.
+
+**\*\* The M3×16 for the stop straps are optional.** If you do not have
+M3×16 bolts, longer or similar sized bolts can be used instead. There are no
+sized nut holes to worry about. The stop straps are only there to prevent the
+flexure from over extending and breaking in extreme cases. You may choose to
+omit it entirely.
 
 The nuts sit in printed nut traps. Push each nut in before inserting its
 screw.
