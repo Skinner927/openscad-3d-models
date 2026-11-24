@@ -40,6 +40,10 @@ PARTS = [
     ("plug_clamp_cap", "plug_clamp_cap"),
     ("plug_flex_stop", "plug_flex_stop"),
 ]
+# Labels forced to a side; the rest go to the side their part is on.
+LEFT = {"stage_z_cap", "stage_z_slider", "stage_x_slider"}
+RIGHT = set()
+
 HARDWARE = [
     ("servo", "MG995 servo"),
     ("bulkhead", "magnetic bulkhead port"),
@@ -147,6 +151,9 @@ def main():
     if hidden:
         sys.exit(f"not visible in the view: {', '.join(hidden)}")
 
+    def on_left(t):
+        return t in LEFT or (t not in RIGHT and pts[t][0] < SIZE / 2)
+
     bg = tuple(int(c) for c in full[0, 0])
     img = Image.new("RGB", (SIZE + 2 * MARGIN, SIZE), bg)
     img.paste(base, (MARGIN, 0))
@@ -156,7 +163,7 @@ def main():
     for side in ("left", "right"):
         # item: (text, anchor point, tag), sorted top to bottom
         group = sorted(((txt, (pts[t][0] + MARGIN, pts[t][1]), t) for t, txt in labels
-                        if (pts[t][0] < SIZE / 2) == (side == "left")), key=lambda g: g[1][1])
+                        if on_left(t) == (side == "left")), key=lambda g: g[1][1])
         ys = spread([g[1][1] for g in group], 46, 30, SIZE - 30)
 
         def text_x(item):
