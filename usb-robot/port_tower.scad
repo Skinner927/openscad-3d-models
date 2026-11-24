@@ -42,13 +42,13 @@ module port_tower_world(i, dx = 0, dz = 0) {
     ldx = i == 0 ? -dx : dx;   // world dx -> stage-local dx
     translate([tower_x(i), tower_y, 0]) rotate([0, 0, 180]) stage_hand(i == 1) {
         stage_assembly(ldx, dz);
-        stage_payload_origin(ldx, dz) color("Orange") port_bracket();
+        stage_payload_origin(ldx, dz) show("port_bracket") color("Orange") port_bracket();
     }
 }
 
 // Bulkhead connector stand-in (for checks / preview), world coords.
 module bulkhead_world(i, dx = 0, dz = 0) {
-    translate([port_x[i] + dx, port_face_y, port_z + dz]) rotate([90, 0, 0]) color("DimGray") {
+    translate([port_x[i] + dx, port_face_y, port_z + dz]) rotate([90, 0, 0]) show("bulkhead") color("DimGray") {
         cylinder(d = bh_thread_d, h = bh_thread_len - plate_t);                   // thread + face
         cylinder(d = bh_nut_af / cos(30), h = bh_nut_t, $fn = 6);                  // nut
         translate([0, 0, -plate_t - 2]) cylinder(d = bh_flange_d, h = 2);          // flange

@@ -26,6 +26,9 @@ export_one() {  # <out.stl> <in.scad> [extra openscad args...]
 # Create image of the assembly. Don't add it to names so it doesn't count towards exports.
 export_one assembly.png assembly.scad --camera='550,-240,400,0,-60,25' -D show_plywood=false &
 pids+=($!)
+# Same view with every part named (renders each part alone to find it)
+{ python3 -I annotate_assembly.py || { echo "FAIL assembly_labeled.png"; exit 1; }; } &
+pids+=($!)
 
 # Export all parts
 for f in parts/*.scad; do

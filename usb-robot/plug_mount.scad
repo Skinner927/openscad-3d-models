@@ -149,7 +149,7 @@ module plug_body_pieces(sweep = [0, 0, 0], relief = true) {
     translate([0, blk_y1 + plug_head_proj - 1, plug_dz]) rotate([-90, 0, 0]) cylinder(d=8, h=1);
   }
 }
-module plug_body_local() { color("White") plug_body_pieces(); }
+module plug_body_local() { show("usb_plug") color("White") plug_body_pieces(); }
 
 // Everything that moves with the plug carriage, minus the plug itself.
 module plug_mount_world(x_pos, y_pos, dx = 0, dz = 0) {
@@ -157,9 +157,9 @@ module plug_mount_world(x_pos, y_pos, dx = 0, dz = 0) {
   translate(o) {
     stage_assembly(dx, dz, base = false); // base is part of the Y carriage
     stage_payload_origin(dx, dz) {
-      color("Orange") plug_flexure();
-      color("Gold") plug_clamp_cap();
-      color("Khaki") plug_flex_stops_placed();
+      show("plug_flexure") color("Orange") plug_flexure();
+      show("plug_clamp_cap") color("Gold") plug_clamp_cap();
+      show("plug_flex_stop") color("Khaki") plug_flex_stops_placed();
     }
   }
 }

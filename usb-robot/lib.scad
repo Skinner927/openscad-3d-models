@@ -3,6 +3,10 @@
 // ============================================================
 include <common.scad>
 
+// Part tag: with $only = "<name>" set (e.g. -D '$only="x_base"'), only the
+// parts tagged with that name render. Unset, everything renders.
+module show(name) { if (is_undef($only) || $only == name) children(); }
+
 // ---------- dovetails (profile in YZ, extruded along +X) ----------
 function dt_profile(c = 0, below = 0) =
   [

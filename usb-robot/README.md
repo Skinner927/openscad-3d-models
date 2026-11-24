@@ -8,6 +8,10 @@ magnets pull the plug the last millimetre or so.
 
 ![](assembly.png)
 
+The same view with every part named (`assembly_labeled.png`):
+
+![](assembly_labeled.png)
+
 Open `assembly.scad` to see the whole machine. Use the Customizer to
 switch between `show_port` 0 and 1, and slide `y_pos` (0 = retracted,
 20 = plugged in).

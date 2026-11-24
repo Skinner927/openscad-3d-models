@@ -19,7 +19,7 @@ xb_screws = [[xb_x0 + 7, xb_y0 + 7], [xb_x1 - 7, xb_y0 + 7],
              [(xb_x0 + xb_x1) / 2, xb_y1 - 7]];
 
 module x_servo_holder_world() {
-    at_inverted_servo(x_shaft_x, x_shaft_y, x_pinion_z0, 90) mg995_holder();
+    show("servo_holder") at_inverted_servo(x_shaft_x, x_shaft_y, x_pinion_z0, 90) mg995_holder();
 }
 // Holder floor-screw holes, mapped from the holder frame to the floor.
 module x_holder_floor_holes() {
@@ -27,11 +27,11 @@ module x_holder_floor_holes() {
         mirror([0, 0, 1]) translate([0, 0, -xb_t]) holder_floor_holes(xb_t);
 }
 module x_servo_world() {
-    at_inverted_servo(x_shaft_x, x_shaft_y, x_pinion_z0, 90) mg995_model();
+    show("servo") at_inverted_servo(x_shaft_x, x_shaft_y, x_pinion_z0, 90) mg995_model();
     x_servo_holder_world();
 }
 module x_pinion_world() {
-    translate([x_shaft_x, x_shaft_y, x_pinion_z0]) color("Gold") pinion();
+    translate([x_shaft_x, x_shaft_y, x_pinion_z0]) show("pinion") color("Blue") pinion();
 }
 
 module x_base() {
@@ -119,14 +119,14 @@ echo("CHECK", "xb_window_min", min(xb_holder_x[0] - xb_x0 - xb_frame,
 
 // ---------------- X carriage (modelled at x_pos = 0) ----------------
 module y_servo_holder_local() {
-    at_inverted_servo(y_shaft_x_rel, y_shaft_y, y_pinion_z0, 90) mg995_holder();
+    show("servo_holder") at_inverted_servo(y_shaft_x_rel, y_shaft_y, y_pinion_z0, 90) mg995_holder();
 }
 module y_holder_floor_holes() {
     at_inverted_servo(y_shaft_x_rel, y_shaft_y, y_pinion_z0, 90) translate([0, 0, holder_floor_up])
         mirror([0, 0, 1]) translate([0, 0, -xc_h]) holder_floor_holes(xc_h);
 }
 module y_servo_local() {
-    at_inverted_servo(y_shaft_x_rel, y_shaft_y, y_pinion_z0, 90) mg995_model();
+    show("servo") at_inverted_servo(y_shaft_x_rel, y_shaft_y, y_pinion_z0, 90) mg995_model();
 }
 
 module x_carriage() {
@@ -151,7 +151,7 @@ module x_carriage() {
 module x_carriage_world(x_pos) { translate([x_pos, 0, 0]) x_carriage(); }
 module y_servo_world(x_pos) { translate([x_pos, 0, 0]) { y_servo_local(); y_servo_holder_local(); } }
 module y_pinion_world(x_pos) {
-    translate([x_pos + y_shaft_x_rel, y_shaft_y, y_pinion_z0]) color("Gold") pinion();
+    translate([x_pos + y_shaft_x_rel, y_shaft_y, y_pinion_z0]) show("pinion") color("Blue") pinion();
 }
 
 echo("CHECK", "x_rail_len", x_rail_len);

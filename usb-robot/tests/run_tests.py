@@ -180,6 +180,7 @@ MUST_BE_EMPTY = [
     "tests/check_yc_integrated_stage_base.scad",
     "tests/probe_spanner_fit.scad",
     "tests/probe_spanner_label.scad",
+    "tests/check_show_only.scad",
     "tests/collide_spanner_reach.scad",
     "tests/check_stage_z_cap_flip.scad",
     "tests/probe_adjust_nut_fit.scad",

@@ -159,10 +159,10 @@ module stage_hand(mir) { if (mir) mirror([1, 0, 0]) children(); else children();
 
 // base = false: the male stage, whose base is part of the Y carriage.
 module stage_assembly(dx = 0, dz = 0, base = true) {
-    if (base) color("SteelBlue") stage_base();
-    color("LightSteelBlue") stage_x_slider_placed(dx);
-    color("SkyBlue") stage_z_cap_placed(dx);
-    color("CadetBlue") stage_z_slider_placed(dx, dz);
+    if (base) show("stage_base") color("SteelBlue") stage_base();
+    show("stage_x_slider") color("LightSteelBlue") stage_x_slider_placed(dx);
+    show("stage_z_cap") color("SkyBlue") stage_z_cap_placed(dx);
+    show("stage_z_slider") color("CadetBlue") stage_z_slider_placed(dx, dz);
 }
 
 // ---- travel checks ----
