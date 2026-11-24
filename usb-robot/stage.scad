@@ -161,8 +161,8 @@ module stage_hand(mir) { if (mir) mirror([1, 0, 0]) children(); else children();
 module stage_assembly(dx = 0, dz = 0, base = true) {
     if (base) show("stage_base") color("SteelBlue") stage_base();
     show("stage_x_slider") color("LightSteelBlue") stage_x_slider_placed(dx);
-    show("stage_z_cap") color("SkyBlue") stage_z_cap_placed(dx);
-    show("stage_z_slider") color("CadetBlue") stage_z_slider_placed(dx, dz);
+    show("stage_z_cap") color("MediumSeaGreen") stage_z_cap_placed(dx);
+    show("stage_z_slider") color("HotPink") stage_z_slider_placed(dx, dz);
 }
 
 // ---- travel checks ----
