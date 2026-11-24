@@ -57,6 +57,7 @@ setting.
 
 | File (`stl/`)                 | Qty | Orientation / notes                                                   |
 | ----------------------------- | --- | --------------------------------------------------------------------- |
+| `nut_spanner.stl`             | 1   | flat. Optional tool: holds the adjust-screw nylocks (5.4mm nuts)      |
 | `pinion.stl`                  | 2   | horn recess up as exported, no supports                               |
 | `plug_clamp_cap.stl`          | 1   | flat                                                                  |
 | `plug_flex_stop.stl`          | 2   | pin up                                                                |
@@ -142,10 +143,13 @@ lock nuts may be nylocks if you have them.
       adjust screw: it goes through the tab, then the nylock goes on
       inside the tab. Snug the nylock so the screw turns freely
       without end play, then thread the screw into the slider's captive
-      nut.
+      nut. To snug it, hold the nylock with the spanner's 15° end from
+      above (stage near mid travel) and turn the screw head.
    3. Slide the z-slider onto the column. Bolt the cap on (upside down
       on tower B, so its Z adjust hole lines up) and fit the Z adjust
-      screw the same way.
+      screw the same way, **before the port bracket goes on**: the bracket
+      blocks the nylock under the cap. Reach it with the spanner's 15° end
+      from the front, or its 90° end from the side.
    4. Push the bulkhead through the bracket's D-hole **from the back**, so
       the flange sits behind the plate. The flat on the thread goes up.
       Fit the nut on the front.

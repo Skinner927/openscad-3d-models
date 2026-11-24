@@ -40,6 +40,7 @@ TARGETS = [
     ("parts/plug_clamp_cap.scad", True),
     ("parts/plug_flex_stop.scad", True),
     ("parts/tower_jig.scad", True),
+    ("parts/nut_spanner.scad", True),
     ("assembly.scad", False),
 ]
 
@@ -113,6 +114,8 @@ WARNS = {
 
 # geometric probes that must hit something (the two-sided half of a fit test)
 MUST_BE_NONEMPTY = [
+    "tests/probe_spanner_grip_15.scad",
+    "tests/probe_spanner_grip_90.scad",
     "tests/probe_xs_adjust_nut_locked.scad",
     "tests/probe_zs_adjust_nut_locked.scad",
     "tests/probe_zs_payload_nut_locked.scad",
@@ -175,6 +178,9 @@ MUST_BE_EMPTY = [
     "tests/probe_lock_nut_fit.scad",
     "tests/check_stage_x_slider_symmetric.scad",
     "tests/check_yc_integrated_stage_base.scad",
+    "tests/probe_spanner_fit.scad",
+    "tests/probe_spanner_label.scad",
+    "tests/collide_spanner_reach.scad",
     "tests/check_stage_z_cap_flip.scad",
     "tests/probe_adjust_nut_fit.scad",
 ]
