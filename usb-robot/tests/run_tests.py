@@ -72,6 +72,8 @@ EXPECT = {
     "z_lock_pocket_w": (">=", 5.7, 1e-6),
     "xs_lock_nut_lift": (">=", 0, 1e-6),
     "xs_lock_nut_lift_max": ("<=", 0.4, 1e-6),
+    "xs_lock_nut_wall_in": (">=", 1.0, 1e-6),
+    "xs_lock_nut_wall_out": (">=", 2.0, 1e-6),
     "holder_overhang": ("<=", 5, 1e-6),
     "m4_stage_bolt_protrude": ("<=", 0, 1e-6),
     "clamp_preload": (">=", 0.3, 1e-6),
@@ -107,6 +109,9 @@ WARNS = {
 
 # geometric probes that must hit something (the two-sided half of a fit test)
 MUST_BE_NONEMPTY = [
+    "tests/probe_xs_back_lock_solid.scad",
+    "tests/probe_xs_back_nut_locked.scad",
+    "tests/probe_xs_front_nut_locked.scad",
     "tests/probe_port_hole_up.scad",
     "tests/probe_port_hole_down.scad",
     "tests/probe_plug_seat_up.scad",
@@ -159,6 +164,8 @@ MUST_BE_EMPTY = [
     "tests/probe_holder_tie_slots.scad",
     "tests/probe_holder_side_tie_slots.scad",
     "tests/probe_lead_post_tunnel.scad",
+    "tests/probe_lock_nut_fit.scad",
+    "tests/check_stage_x_slider_symmetric.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

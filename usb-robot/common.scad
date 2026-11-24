@@ -91,6 +91,7 @@ stage_gap_z = 6; // z-slider bottom above x-slider top, mid travel
 cap_gap = 10; // cap underside above z-slider top, mid travel
 cap_t = 6;
 locknut_t = 4; // M3 nylock thickness
+lock_nut_t = 4; // lock-screw nuts (X and Z lock): pockets sized for 4 mm thick nuts
 x_adj_len = 30; // X adjust screw length (README BOM)
 z_adj_len = 30; // Z adjust screw length (README BOM)
 xs_adj_hole = xs_len; // X adjust hole: through the x-slider

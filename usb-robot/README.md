@@ -49,7 +49,7 @@ critical: the stages and the servo end points take up the error.
 
 ## Print list
 
-Ready-made STLs are in `stl/`, with `*_mirrored.stl` for tower B (stage base excepted: one part serves both sides). Re-export them after changing any parameter in `common.scad` by running `./export_stls.sh` (about 30 seconds).
+Ready-made STLs are in `stl/`, with `*_mirrored.stl` for tower B (stage base and x-slider excepted: one part serves both sides). Re-export them after changing any parameter in `common.scad` by running `./export_stls.sh` (about 30 seconds).
 
 Use PLA or PETG with 3–4 walls and 30% infill unless noted. Every part
 fits a 250mm bed.
@@ -57,7 +57,7 @@ fits a 250mm bed.
 | File (`parts/`)       | Qty | Orientation / notes                                        |
 | --------------------- | --- | ---------------------------------------------------------- |
 | `stage_base.scad`     | 3   | as modelled. Same part for every stage (turn it around)    |
-| `stage_x_slider.scad` | 3   | upright, slot down (bridges). 1 mirrored                   |
+| `stage_x_slider.scad` | 3   | upright, slot down (bridges). Same part for every stage    |
 | `stage_z_slider.scad` | 3   | lying on payload face. 1 mirrored                          |
 | `stage_z_cap.scad`    | 3   | flat. 1 mirrored                                           |
 | `port_bracket.scad`   | 2   | flat back face down, ribs up                               |
@@ -71,9 +71,10 @@ fits a 250mm bed.
 | `plug_flex_stop.scad` | 2   | pin up                                                     |
 | `tower_jig.scad`      | 1   | flat as exported. Tower-base placement jig (see Layout)    |
 
-The mirrored x-slider, z-slider and cap go on **port tower B**, so both
-towers' X adjust screws face outward. The stage base needs no mirrored
-version: turned 180° it is its own mirror image. The male stage can be either hand.
+The mirrored z-slider and cap go on **port tower B**, so both towers'
+Z adjust screws sit outward. The stage base needs no mirrored version:
+turned 180° it is its own mirror image. The x-slider is symmetric, with
+an X adjust nut slot at each end. The male stage can be either hand.
 
 ## Hardware
 
@@ -82,8 +83,8 @@ version: turned 180° it is its own mirror image. The male stage can be either h
 | MG995 servo (+ round horn and its screws)   | 2   | X and Y axes                                                       |
 | M3×30 + M3 nylock + M3 nut                  | 3   | X adjust screw, per stage                                          |
 | M3×30 + M3 nylock + M3 nut                  | 3   | Z adjust screw, per stage                                          |
-| M3×12 + M3 nut                              | 3   | X lock screw, per stage (towers: back face; male stage: front)     |
-| M3×16 + M3 nut                              | 3   | Z lock screw, per stage (enters from the outward side)             |
+| M3×12 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | X lock screw, per stage (towers: back face; male stage: front)     |
+| M3×16 + M3 nut (≤ 4mm thick, nylock OK)     | 3   | Z lock screw, per stage (enters from the outward side)             |
 | M3×12 (self-tapping into the column)        | 6   | Cap to column, 2 per stage                                         |
 | M3×12 + M3 nut                              | 4   | Port bracket to stage                                              |
 | M3×12 + M3 nut                              | 2   | Flexure to male stage                                              |
@@ -94,6 +95,7 @@ version: turned 180° it is its own mirror image. The male stage can be either h
 | M4×12 + M4 nut                              | 4   | Male stage base to Y carriage (longer bolts scrape the X carriage) |
 | #8 / M4 wood screw, ~20mm                   | 13  | 2 tower bases (4 each) + X base (5)                                |
 | Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 7   | Cable pillar (2), X servo lead (1), Y servo lead (2), spares (2)   |
+| M1.7x6 self-tapping                         | 8   | Servo spline mount to pinion gear (YMMV)                           |
 
 The nuts sit in printed nut traps. Push each nut in before inserting its
 screw.
@@ -101,14 +103,18 @@ screw.
 ## Assembly notes
 
 1. **Port towers:**
-   1. Slide an M3 nut, flats down, into the slot in the x-slider's −X end
-      until it lines up with the hole in the middle of the back face. Then
-      slide the x-slider onto the base rail. The X lock screw goes into
-      that back hole; the hole on the front face (toward the X axis) is
-      for the male stage, which uses it instead because its back faces
-      the cable pillar.
-   2. Fit the X adjust screw: it goes through the tab, then the nylock
-      goes on inside the tab. Snug the nylock so the screw turns freely
+   1. Push an M3 nut, corner down, up into the pocket in the x-slider's
+      underside behind the hole in the middle of the back face. Hold it
+      there and slide the x-slider onto the base rail; the nut then rides
+      on the base. The X lock screw goes into
+      that back hole; the two holes on the front face (toward the X
+      axis, 8mm either side of centre) are for the male stage, which
+      uses one of them instead because its back faces the cable pillar.
+      Its nut drops into the slot above that hole, corner down.
+   2. Drop an M3 nut into the X adjust slot at the end that faces the
+      base's screw tab (the slot at the other end stays empty). Fit the X
+      adjust screw: it goes through the tab, then the nylock goes on
+      inside the tab. Snug the nylock so the screw turns freely
       without end play, then thread the screw into the slider's captive
       nut.
    3. Slide the z-slider onto the column. Bolt the cap on and fit the Z

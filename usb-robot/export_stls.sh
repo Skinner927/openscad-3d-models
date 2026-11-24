@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 mkdir -p stl
 
 # stage_base is symmetric: turned 180 deg it is its own mirror image
-MIRRORED=(stage_x_slider stage_z_slider stage_z_cap)
+MIRRORED=(stage_z_slider stage_z_cap)
 fail=0
 pids=()
 names=()

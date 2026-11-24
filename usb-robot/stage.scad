@@ -39,9 +39,10 @@ module up_arrow_cut() {
 
 // X lock screws: height above the base top (onto the rail flank), and the
 // back nut's Y (the front one mirrors it).
-xs_lock_z = 3; // nuts rest flat on the base 0.25 below the axis and lift onto it
-xs_back_nut_y = -9;
-xs_front_nut_rest = (m3_nut_af - 0.2) / 2; // front nut sits flat-down too
+xs_lock_z = 3.3; // nuts rest on the base a little below the axis and lift onto it
+xs_back_nut_y = -9.5;
+xs_front_lock_dx = 8; // front (male stage) lock holes, each side of centre
+xs_front_nut_rest = (m3_nut_af - 0.2) / 2 / cos(30); // lock nuts sit corner-down
 // Upper stack shares the x-slider's X offset.
 col_ovh = (col_w - xs_len) / 2;   // column overhang past the block, per X side
 module stage_x_slider() {
@@ -59,24 +60,32 @@ module stage_x_slider() {
                              [e + o, xs_top + 0.01]]);
         }
         translate([x0 - 1, 0, stage_base_h]) dovetail_slot(xs_len + 2);
-        // X adjust: screw enters +X face, nut dropped in from the top
+        // X adjust: through hole, nut dropped in from the top. A nut slot at
+        // each end so one part serves both towers: the screw enters the end
+        // facing the base's tab and its nut goes in that end's slot.
         translate([x0 + xs_len + 0.01, 0, stage_base_h + xs_screw_z]) rotate([0, -90, 0])
             screw_hole(m3_d, xs_adj_hole);
-        translate([x0 + xs_len - 6 - m3_nut_t / 2, -(m3_nut_af + clr) / 2, stage_base_h + xs_screw_z - 3.5])
-            cube([m3_nut_t + 0.4, m3_nut_af + clr, xs_h]);
+        for (sx = [-1, 1])
+            translate([xs_xc + sx * (xs_len / 2 - 6) - (m3_nut_t + 0.4) / 2, -(m3_nut_af + clr) / 2, stage_base_h + xs_screw_z - 3.5])
+                cube([m3_nut_t + 0.4, m3_nut_af + clr, xs_h]);
         // X lock (male stage): horizontal from the +Y face onto the rail
-        // flank, nut dropped in from the top, flats down
-        translate([xs_xc + 8, xs_w / 2 + 0.01, stage_base_h + xs_lock_z]) rotate([90, 0, 0])
-            screw_hole(m3_d, xs_w / 2 - 3);
-        translate([xs_xc + 8 - (m3_nut_af + clr) / 2 / cos(30), -xs_back_nut_y - (m3_nut_t + 0.4) / 2, stage_base_h - 0.01])
-            cube([(m3_nut_af + clr) / cos(30), m3_nut_t + 0.4, xs_h]);
+        // flank, nut dropped in from the top, corner down. The pocket is
+        // across-flats wide so the nut cannot spin.
+        // One each side, 8 off centre (preference), so the part stays
+        // symmetric; use either.
+        for (fx = [-xs_front_lock_dx, xs_front_lock_dx]) {
+            translate([xs_xc + fx, xs_w / 2 + 0.01, stage_base_h + xs_lock_z]) rotate([90, 0, 0])
+                screw_hole(m3_d, xs_w / 2 - 3);
+            translate([xs_xc + fx - (m3_nut_af + clr) / 2, -xs_back_nut_y - (lock_nut_t + 0.4) / 2, stage_base_h - 0.01])
+                cube([m3_nut_af + clr, lock_nut_t + 0.4, xs_h + 1]);
+        }
         // X lock (towers): centred on the -Y (back) face, which faces away
-        // from the X axis. The column covers the top, so the nut slides in
-        // along X from the -X end face, flats up.
+        // from the X axis. The column covers the top, so the nut pushes up
+        // into a pocket open underneath, corner down, like the front ones.
         translate([xs_xc, -xs_w / 2 - 0.01, stage_base_h + xs_lock_z]) rotate([-90, 0, 0])
             screw_hole(m3_d, xs_w / 2 - 3);
-        translate([x0 - 1, xs_back_nut_y - (m3_nut_t + 0.4) / 2, stage_base_h + xs_lock_z - (m3_nut_af + clr) / 2])
-            cube([xs_xc - x0 + 1 + (m3_nut_af + clr) / 2 / cos(30), m3_nut_t + 0.4, m3_nut_af + clr]);
+        translate([xs_xc - (m3_nut_af + clr) / 2, xs_back_nut_y - (lock_nut_t + 0.4) / 2, stage_base_h - 0.01])
+            cube([m3_nut_af + clr, lock_nut_t + 0.4, xs_lock_z + (m3_nut_af + clr) / 2 / cos(30) + 0.01]);
         // recessed up-arrow on the Z rail's front face (matches the z-slider's)
         translate([xs_xc, col_y1 + dt_h, xs_top + col_h / 2]) up_arrow_cut();
         // cap screws (tapped into column top)
@@ -109,8 +118,8 @@ module stage_z_slider() {
         lz = zs_z0 + zs_h - 5;
         x1 = x0 + zs_w;
         translate([x1 + 0.01, col_y1 + 2, lz]) rotate([0, -90, 0]) screw_hole(m3_d, zs_w / 2 - 4);
-        translate([x1 - 2.5 - (m3_nut_t + 0.4), col_y1 + 2 - zl_pocket_w / 2, lz - (m3_nut_af + clr) / 2 / cos(30)])
-            cube([m3_nut_t + 0.4, zl_pocket_w, zs_h]);
+        translate([x1 - 2.5 - (lock_nut_t + 0.4), col_y1 + 2 - zl_pocket_w / 2, lz - (m3_nut_af + clr) / 2 / cos(30)])
+            cube([lock_nut_t + 0.4, zl_pocket_w, zs_h]);
     }
 }
 
@@ -158,11 +167,15 @@ _ztip = stage_top_z - z_adj_len;
 echo("CHECK", "z_adj_engage", (_znut - stage_travel - (m3_nut_t + 0.4) / 2) - _ztip);
 echo("CHECK", "z_adj_hole", _ztip - (zs_z0 + zs_h + stage_travel - zs_adj_hole));
 echo("CHECK", "z_lock_pocket_w", zl_pocket_w);
-// X lock nuts rest on the stage base (pockets open underneath). Screw axis
-// minus the resting nut centre: the nut can lift a little but never drop.
-// Real nut is 0.2 under m3_nut_af. Worst of the two pockets.
-echo("CHECK", "xs_lock_nut_lift", min(xs_lock_z - xs_front_nut_rest, xs_lock_z - (m3_nut_af - 0.2) / 2));
-echo("CHECK", "xs_lock_nut_lift_max", max(xs_lock_z - xs_front_nut_rest, xs_lock_z - (m3_nut_af - 0.2) / 2));
+// X lock nuts (front and back) rest corner-down on the stage base (pockets
+// open underneath). Screw axis minus the resting nut centre: the nut can
+// lift a little but never drop. Real nut is 0.2 under m3_nut_af.
+_xs_back_lift = xs_lock_z - xs_front_nut_rest;
+echo("CHECK", "xs_lock_nut_lift", min(xs_lock_z - xs_front_nut_rest, _xs_back_lift));
+// X lock nut pockets (both mirror about Y=0): wall to the rail slot / outer face
+echo("CHECK", "xs_lock_nut_wall_in", -xs_back_nut_y - (lock_nut_t + 0.4) / 2 - (dt_w / 2 + clr));
+echo("CHECK", "xs_lock_nut_wall_out", xs_w / 2 - (-xs_back_nut_y + (lock_nut_t + 0.4) / 2));
+echo("CHECK", "xs_lock_nut_lift_max", max(xs_lock_z - xs_front_nut_rest, _xs_back_lift));
 // port bracket M3x12 tip (through the 4 mm plate) must not bottom out
 echo("CHECK", "bracket_screw_room", payload_hole_depth - (bracket_screw_len - plate_t));
 // cap screw: thread into the column's 10 mm tapped hole
