@@ -108,6 +108,24 @@ omit it entirely.
 The nuts sit in printed nut traps. Push each nut in before inserting its
 screw.
 
+### Order totals
+
+| Item                                        | Required | With optional parts (\*, \*\*) |
+| ------------------------------------------- | -------- | ------------------------------ |
+| MG995 servo (+ round horn and its screws)   | 2        | 2                              |
+| M2×6 self-tapping                           | 8        | 8                              |
+| M3×12                                       | 34       | 34                             |
+| M3×16                                       | 0        | 2                              |
+| M3×30                                       | 0        | 6                              |
+| M3 nut                                      | 12       | 20                             |
+| M3 nylock                                   | 0        | 6                              |
+| #8 / M4 wood screw, ~20mm                   | 13       | 13                             |
+| Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 7        | 7                              |
+
+All 34 M3×12 can be ordinary machine screws: 12 take a nut, and the 22
+marked self-tapping cut their own thread in 2.9mm printed holes. The 6
+lock nuts may be nylocks if you have them.
+
 ## Assembly notes
 
 1. **Port towers:**
