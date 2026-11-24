@@ -56,14 +56,14 @@ fits a 250mm bed.
 
 | File (`parts/`)       | Qty | Orientation / notes                                        |
 | --------------------- | --- | ---------------------------------------------------------- |
-| `stage_base.scad`     | 3   | as modelled. Same part for every stage (turn it around)    |
+| `stage_base.scad`     | 2   | as modelled. Same part for both towers (turn it around)    |
 | `stage_x_slider.scad` | 3   | upright, slot down (bridges). Same part for every stage    |
 | `stage_z_slider.scad` | 3   | lying on payload face. 1 mirrored                          |
 | `stage_z_cap.scad`    | 3   | flat. 1 mirrored                                           |
 | `port_bracket.scad`   | 2   | flat back face down, ribs up                               |
 | `x_base.scad`         | 1   | flat, about 190 × 155mm                                    |
 | `x_carriage.scad`     | 1   | slots down                                                 |
-| `y_carriage.scad`     | 1   | slot down, pillar up                                       |
+| `y_carriage.scad`     | 1   | slot down, pillar up. Male stage base/rail built in        |
 | `pinion.scad`         | 2   | horn recess up as exported, no supports                    |
 | `servo_holder.scad`   | 2   | ear plate on the bed, walls up (X servo + Y servo)         |
 | `plug_flexure.scad`   | 1   | back face down. PLA/PETG `flex_beam_w=1.2`, or TPU with ~2 |
@@ -74,7 +74,9 @@ fits a 250mm bed.
 The mirrored z-slider and cap go on **port tower B**, so both towers'
 Z adjust screws sit outward. The stage base needs no mirrored version:
 turned 180° it is its own mirror image. The x-slider is symmetric, with
-an X adjust nut slot at each end. The male stage can be either hand.
+an X adjust nut slot at each end. The male stage has no separate base:
+its plate, rail and X adjust tab are built into the Y carriage, so it
+needs no bolts. It uses the normal (unmirrored) z-slider and cap.
 
 ## Hardware
 
@@ -92,7 +94,6 @@ an X adjust nut slot at each end. The male stage can be either hand.
 | M3×12 self-tapping                          | 6   | Holders to X base / X carriage, from underneath                    |
 | M3×12 (self-tapping)                        | 2   | Clamp cap to cradle                                                |
 | M3×16 + M3 nut                              | 2   | Stop straps, through the flexure top bar                           |
-| M4×12 + M4 nut                              | 4   | Male stage base to Y carriage (longer bolts scrape the X carriage) |
 | #8 / M4 wood screw, ~20mm                   | 13  | 2 tower bases (4 each) + X base (5)                                |
 | Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 7   | Cable pillar (2), X servo lead (1), Y servo lead (2), spares (2)   |
 | M1.7x6 self-tapping                         | 8   | Servo spline mount to pinion gear (YMMV)                           |

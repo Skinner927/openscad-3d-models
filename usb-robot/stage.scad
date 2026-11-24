@@ -12,7 +12,8 @@ include <lib.scad>
 // multmatrix maps (x,y,z) -> (y,z,x): run->Z, width->X, height->Y.
 module zrail_frame() { multmatrix([[0,1,0,0],[0,0,1,0],[1,0,0,0]]) children(); }
 
-module stage_base() {
+// mount_holes = false: the male stage, built into the Y carriage.
+module stage_base(mount_holes = true) {
     rail_x0 = -stage_L / 2;
     rail_len = stage_L - stage_tab_t;
     tab_h = stage_base_h + xs_screw_z + 6;
@@ -23,7 +24,7 @@ module stage_base() {
             // adjust-screw tab
             translate([stage_L / 2 - stage_tab_t, -8, 0]) cube([stage_tab_t, 16, tab_h]);
         }
-        wood_screw_holes(stage_mount_pts, stage_base_h, cbore = 3);
+        if (mount_holes) wood_screw_holes(stage_mount_pts, stage_base_h, cbore = 3);
         // X adjust screw through tab (head outside, nylock inside)
         translate([stage_L / 2 - stage_tab_t - 1, 0, stage_base_h + xs_screw_z])
             rotate([0, 90, 0]) screw_hole(m3_d, stage_tab_t + 2);
@@ -145,8 +146,9 @@ module stage_payload_origin(dx = 0, dz = 0) {
 // Optional mirror (tower B) wraps the stage-local geometry.
 module stage_hand(mir) { if (mir) mirror([1, 0, 0]) children(); else children(); }
 
-module stage_assembly(dx = 0, dz = 0) {
-    color("SteelBlue") stage_base();
+// base = false: the male stage, whose base is part of the Y carriage.
+module stage_assembly(dx = 0, dz = 0, base = true) {
+    if (base) color("SteelBlue") stage_base();
     color("LightSteelBlue") stage_x_slider_placed(dx);
     color("SkyBlue") stage_z_cap_placed(dx);
     color("CadetBlue") stage_z_slider_placed(dx, dz);

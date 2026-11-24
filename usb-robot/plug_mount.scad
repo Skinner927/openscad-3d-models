@@ -155,7 +155,7 @@ module plug_body_local() { color("White") plug_body_pieces(); }
 module plug_mount_world(x_pos, y_pos, dx = 0, dz = 0) {
   o = ms_origin(x_pos, y_pos);
   translate(o) {
-    stage_assembly(dx, dz);
+    stage_assembly(dx, dz, base = false); // base is part of the Y carriage
     stage_payload_origin(dx, dz) {
       color("Orange") plug_flexure();
       color("Gold") plug_clamp_cap();

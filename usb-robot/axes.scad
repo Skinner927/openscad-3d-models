@@ -172,6 +172,8 @@ pillar_w   = 16;
 pillar_top = port_z + plug_drop - 1 + flex_isl_h + 6 + 5 + 6;
 
 module y_carriage() {
+    // the male stage's base (plate, rail, X adjust tab) is built in on top
+    translate([0, 0, yc_top]) stage_base(mount_holes = false);
     difference() {
         union() {
             translate([yc_x0, yc_y0, yc_z0]) cube([yc_x1 - yc_x0, yc_len, yc_h]);
@@ -182,11 +184,6 @@ module y_carriage() {
             translate([xs_xc - pillar_w / 2, yc_y0, yc_z0]) cube([pillar_w, yc_pillar_d, pillar_top - yc_z0]);
         }
         translate([0, yc_y0 - 1, yc_z0]) rotate([0, 0, 90]) dovetail_slot(yc_len + 2);
-        // M4 bolts up through captive nuts into the stage base
-        for (p = stage_mount_pts) translate([p[0], p[1], yc_z0]) {
-            screw_hole(m4_d, yc_h);
-            translate([0, 0, -0.01]) m4_nut_trap(m4_nut_t + 0.5);
-        }
         // two zip-tie slots through the pillar, near its front face
         for (dz = [6, 18]) translate([xs_xc - pillar_w / 2 - 1, yc_y0 + yc_pillar_d - 5.5, pillar_top - dz])
             cube([pillar_w + 2, 3, 5]);
@@ -197,7 +194,6 @@ module y_carriage_world(x_pos, y_pos) {
     translate([o[0], o[1], 0]) y_carriage();
 }
 
-echo("CHECK", "m4_stage_bolt_protrude", m4_stage_bolt_len - ((stage_base_h - 3) + yc_h));
 echo("CHECK", "y_mesh_gap", ((y_pitch_x_rel - xs_xc) - y_shaft_x_rel) - pinion_pd / 2);
 echo("CHECK", "pillar_top_z", pillar_top);
 echo("CHECK", "pillar_min", port_z + 25);

@@ -75,7 +75,6 @@ EXPECT = {
     "xs_lock_nut_wall_in": (">=", 1.0, 1e-6),
     "xs_lock_nut_wall_out": (">=", 2.0, 1e-6),
     "holder_overhang": ("<=", 5, 1e-6),
-    "m4_stage_bolt_protrude": ("<=", 0, 1e-6),
     "clamp_preload": (">=", 0.3, 1e-6),
     "clamp_lip_overlap": (">=", 0.4, 1e-6),
     "lip_hold_y": (">=", 1.5, 1e-6),
@@ -167,6 +166,7 @@ MUST_BE_EMPTY = [
     "tests/probe_lead_post_tunnel.scad",
     "tests/probe_lock_nut_fit.scad",
     "tests/check_stage_x_slider_symmetric.scad",
+    "tests/check_yc_integrated_stage_base.scad",
 ]
 
 ECHO_RE = re.compile(r'ECHO: "CHECK", "([^"]+)", (.+)$')

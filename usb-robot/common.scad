@@ -164,10 +164,9 @@ yc_h = 10; // Y carriage body
 xc_z0 = xb_t;
 xc_top = xc_z0 + xc_h;
 yc_z0 = xc_top;
-yc_top = yc_z0 + yc_h; // male stage base sits here
+yc_top = yc_z0 + yc_h; // male stage base (built into the Y carriage) starts here
 servo_ear_to_pinion = 14; // ear (shaft-side face) to pinion top face
 rack_base = 4;
-m4_stage_bolt_len = 12; // male stage base -> Y carriage (README BOM)
 
 // Male stage origin (stage-local 0,0 at yc_top) for carriage position
 // x_pos (plug X, = port_x[i] at a port) and y_pos (0 = retracted,
