@@ -49,7 +49,7 @@ critical: the stages and the servo end points take up the error.
 
 ## Print list
 
-Ready-made STLs are in `stl/`, with `*_mirrored.stl` for tower B (stage base and x-slider excepted: one part serves both sides). Re-export them after changing any parameter in `common.scad` by running `./export_stls.sh` (about 30 seconds).
+Ready-made STLs are in `stl/`, with `*_mirrored.stl` for tower B (stage base, x-slider and cap excepted: one part serves both sides). Re-export them after changing any parameter in `common.scad` by running `./export_stls.sh` (about 30 seconds).
 
 Use PLA or PETG with 3–4 walls and 30% infill unless noted. Every part
 fits a 250mm bed.
@@ -59,7 +59,7 @@ fits a 250mm bed.
 | `stage_base.scad`     | 2   | as modelled. Same part for both towers (turn it around)    |
 | `stage_x_slider.scad` | 3   | upright, slot down (bridges). Same part for every stage    |
 | `stage_z_slider.scad` | 3   | lying on payload face. 1 mirrored                          |
-| `stage_z_cap.scad`    | 3   | flat. 1 mirrored                                           |
+| `stage_z_cap.scad`    | 3   | flat. Same part for every stage (flip it for tower B)      |
 | `port_bracket.scad`   | 2   | flat back face down, ribs up                               |
 | `x_base.scad`         | 1   | flat, about 190 × 155mm                                    |
 | `x_carriage.scad`     | 1   | slots down                                                 |
@@ -71,8 +71,9 @@ fits a 250mm bed.
 | `plug_flex_stop.scad` | 2   | pin up                                                     |
 | `tower_jig.scad`      | 1   | flat as exported. Tower-base placement jig (see Layout)    |
 
-The mirrored z-slider and cap go on **port tower B**, so both towers'
-Z adjust screws sit outward. The stage base needs no mirrored version:
+The mirrored z-slider goes on **port tower B**, so both towers' Z adjust
+screws sit outward. Tower B's cap is the normal cap turned upside down,
+which moves its Z adjust hole to the other side. The stage base needs no mirrored version:
 turned 180° it is its own mirror image. The x-slider is symmetric, with
 an X adjust nut slot at each end. The male stage has no separate base:
 its plate, rail and X adjust tab are built into the Y carriage, so it
@@ -98,6 +99,11 @@ needs no bolts. It uses the normal (unmirrored) z-slider and cap.
 | Zip tie, ≤ 3mm wide × ≤ 2.5mm thick, ~150mm | 7   | Cable pillar (2), X servo lead (1), Y servo lead (2), spares (2)   |
 | M1.7x6 self-tapping                         | 8   | Servo spline mount to pinion gear (YMMV)                           |
 
+**The M3×30 adjust screws are optional.** They give fine, screw-driven
+adjustment (0.5mm per turn). Without them, loosen the lock screws, slide
+each stage into place with your fingers, and tighten the lock screws
+again. Skipping them also skips their nylocks and nuts: 6 fewer of each.
+
 The nuts sit in printed nut traps. Push each nut in before inserting its
 screw.
 
@@ -118,8 +124,9 @@ screw.
       inside the tab. Snug the nylock so the screw turns freely
       without end play, then thread the screw into the slider's captive
       nut.
-   3. Slide the z-slider onto the column. Bolt the cap on and fit the Z
-      adjust screw the same way.
+   3. Slide the z-slider onto the column. Bolt the cap on (upside down
+      on tower B, so its Z adjust hole lines up) and fit the Z adjust
+      screw the same way.
    4. Push the bulkhead through the bracket's D-hole **from the back**, so
       the flange sits behind the plate. The flat on the thread goes up.
       Fit the nut on the front.

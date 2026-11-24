@@ -172,6 +172,7 @@ MUST_BE_EMPTY = [
     "tests/probe_lock_nut_fit.scad",
     "tests/check_stage_x_slider_symmetric.scad",
     "tests/check_yc_integrated_stage_base.scad",
+    "tests/check_stage_z_cap_flip.scad",
     "tests/probe_adjust_nut_fit.scad",
 ]
 

@@ -1,7 +1,6 @@
-// Column cap holding the Z adjust screw. Print flat. Qty 3 (one with mirrored = true, for port tower B).
+// Column cap holding the Z adjust screw. Print flat. Qty 3, all identical:
+// port tower B's cap is this one flipped upside down, which puts the Z adjust
+// hole on the other side (tests/check_stage_z_cap_flip.scad).
 include <../stage.scad>
-/* [Options] */
-// true for port tower B (mirror image, X adjust screw faces outward)
-mirrored = false;
 
-stage_hand(mirrored) translate([-xs_xc, 0, -col_top]) stage_z_cap();
+translate([-xs_xc, 0, -col_top]) stage_z_cap();
