@@ -92,11 +92,13 @@ cap_gap = 10; // cap underside above z-slider top, mid travel
 cap_t = 6;
 locknut_t = 4; // M3 nylock thickness
 lock_nut_t = 4; // lock-screw nuts (X and Z lock): pockets sized for 4 mm thick nuts
+lock_nut_af = 5.4; // measured across flats (nylock and plain M3)
+lock_pocket_w = lock_nut_af + 0.2; // tight across-flats pocket: nut turns ~4 deg then jams
 x_adj_len = 30; // X adjust screw length (README BOM)
 z_adj_len = 30; // Z adjust screw length (README BOM)
 xs_adj_hole = xs_len; // X adjust hole: through the x-slider
 zs_adj_hole = zs_h; // Z adjust hole: through the z-slider
-zl_pocket_w = m3_nut_af + clr; // Z lock nut pocket width (Y)
+zl_pocket_w = lock_pocket_w; // Z lock nut pocket width (Y)
 zl_side = 1; // Z lock screw enters from this stage-local X side
 
 // ---- derived stage values (stage-local coords: base centred on x=y=0) ----

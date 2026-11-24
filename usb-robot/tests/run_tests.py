@@ -69,7 +69,7 @@ EXPECT = {
     "x_adj_hole": (">=", 0, 1e-6),
     "z_adj_engage": (">=", 0, 1e-6),
     "z_adj_hole": (">=", 0, 1e-6),
-    "z_lock_pocket_w": (">=", 5.7, 1e-6),
+    "z_lock_pocket_w": (">=", 5.5, 1e-6),
     "xs_lock_nut_lift": (">=", 0, 1e-6),
     "xs_lock_nut_lift_max": ("<=", 0.4, 1e-6),
     "xs_lock_nut_wall_in": (">=", 1.0, 1e-6),
@@ -109,6 +109,7 @@ WARNS = {
 
 # geometric probes that must hit something (the two-sided half of a fit test)
 MUST_BE_NONEMPTY = [
+    "tests/probe_zs_lock_nut_locked.scad",
     "tests/probe_xs_back_lock_solid.scad",
     "tests/probe_xs_back_nut_locked.scad",
     "tests/probe_xs_front_nut_locked.scad",
