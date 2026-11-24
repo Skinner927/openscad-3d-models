@@ -15,7 +15,7 @@ module drivers(i) {
     translate(x) rotate([0, out * 90, 0]) cylinder(d = 5, h = 120);
     // Z lock screw: horizontal along stage-local X from the z-slider side
     lx = zl_side * (zs_w / 2);
-    l = to_world(i, [xs_xc + lx, col_y1 + 2, zs_z0 + zs_h - 5]);
+    l = to_world(i, [xs_xc + lx, zl_screw_y, zs_z0 + zs_h - 5]);
     lout = (i == 0 ? -1 : 1) * zl_side;
     translate(l) rotate([0, lout * 90, 0]) cylinder(d = 5, h = 120);
     // X lock screw: on the back (stage-local -Y) face, which faces away

@@ -8,6 +8,6 @@ x1 = xs_xc + zs_w / 2;
 intersection() {
   stage_z_slider();
   hull() for (dz = [0, zs_h])
-    translate([x1 - 2.5 - (lock_nut_t + 0.4) / 2, col_y1 + 2, lz + dz]) rotate([0, 90, 0]) rotate([0, 0, 8])
+    translate([x1 - 2.5 - (lock_nut_t + 0.4) / 2, zl_screw_y, lz + dz]) rotate([0, 90, 0]) rotate([0, 0, 8])
       cylinder(d = af / cos(30), h = 4, center = true, $fn = 6);
 }

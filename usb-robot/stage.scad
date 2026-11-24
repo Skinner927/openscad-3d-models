@@ -42,6 +42,9 @@ module up_arrow_cut() {
 // back nut's Y (the front one mirrors it).
 xs_lock_z = 3.3; // nuts rest on the base a little below the axis and lift onto it
 xs_back_nut_y = -9.5;
+// Z lock screw Y: as far toward the payload face as the rail flank allows,
+// so its nut stays inside the z-slider (the back face slides on the column)
+zl_screw_y = col_y1 + 3;
 xs_front_lock_dx = 8; // front (male stage) lock holes, each side of centre
 xs_front_nut_rest = lock_nut_af / 2 / cos(30); // lock nuts sit corner-down
 // Upper stack shares the x-slider's X offset.
@@ -120,8 +123,8 @@ module stage_z_slider() {
         // Z lock: from the +X (outward) side onto the rail flank, nut dropped in from the top
         lz = zs_z0 + zs_h - 5;
         x1 = x0 + zs_w;
-        translate([x1 + 0.01, col_y1 + 2, lz]) rotate([0, -90, 0]) screw_hole(m3_d, zs_w / 2 - 4);
-        translate([x1 - 2.5 - (lock_nut_t + 0.4), col_y1 + 2 - zl_pocket_w / 2, lz - zl_pocket_w / 2 / cos(30)])
+        translate([x1 + 0.01, zl_screw_y, lz]) rotate([0, -90, 0]) screw_hole(m3_d, zs_w / 2 - 4);
+        translate([x1 - 2.5 - (lock_nut_t + 0.4), zl_screw_y - zl_pocket_w / 2, lz - zl_pocket_w / 2 / cos(30)])
             cube([lock_nut_t + 0.4, zl_pocket_w, zs_h]);
     }
 }
@@ -171,6 +174,11 @@ _ztip = stage_top_z - z_adj_len;
 echo("CHECK", "z_adj_engage", (_znut - stage_travel - (m3_nut_t + 0.4) / 2) - _ztip);
 echo("CHECK", "z_adj_hole", _ztip - (zs_z0 + zs_h + stage_travel - zs_adj_hole));
 echo("CHECK", "z_lock_pocket_w", zl_pocket_w);
+// Z lock nut (5.4 AF real) centred on its screw must stay inside the
+// z-slider's back face, which slides flush on the column face (col_y1)
+echo("CHECK", "z_lock_nut_inside", (zl_screw_y - lock_nut_af / 2) - col_y1);
+// screw axis must stay below the rail's wide top edge to bear on the flank
+echo("CHECK", "z_lock_on_flank", (col_y1 + dt_h) - zl_screw_y);
 // X lock nuts (front and back) rest corner-down on the stage base (pockets
 // open underneath). Screw axis minus the resting nut centre: the nut can
 // lift a little but never drop.

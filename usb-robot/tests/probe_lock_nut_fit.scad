@@ -28,7 +28,7 @@ x1 = xs_xc + zs_w / 2;
 intersection() {
   stage_z_slider();
   union() {
-    translate([x1 - 2.5 - 2.2, col_y1 + 2, lz]) rotate([0, 90, 0]) cylinder(d = d, h = n, center = true, $fn = 6);
-    translate([x1 - 2.5 - 2.2 - n / 2, col_y1 + 2 - af / 2, lz]) cube([n, af, zs_h]);
+    translate([x1 - 2.5 - 2.2, zl_screw_y, lz]) rotate([0, 90, 0]) cylinder(d = d, h = n, center = true, $fn = 6);
+    translate([x1 - 2.5 - 2.2 - n / 2, zl_screw_y - af / 2, lz]) cube([n, af, zs_h]);
   }
 }
