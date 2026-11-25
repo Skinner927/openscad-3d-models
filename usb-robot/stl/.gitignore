@@ -1,0 +1,2 @@
+# Use ./export_stls.sh to generate the STLs
+*.stl
